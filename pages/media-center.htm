@@ -48,7 +48,7 @@ return Response::download($pathToFile, $fileName, $headers);
     <div class="container media-tabs">
         <div class="tabs">
             {% if logos.count() %}
-            <a href="#logo" title="Logo">Logo</a>
+            <a href="#brand-kit" title="Brand kit">Brand kit</a>
             {% endif %}
 
             {% if flyers.count() %}
@@ -80,7 +80,7 @@ return Response::download($pathToFile, $fileName, $headers);
         <!--tabs content	-->
         {% if logos.count() %}
 <div class="container">
-        <div class="row card-container-row start-xs logo" id="logo">
+        <div class="row card-container-row start-xs logo" id="brand-kit">
             {% for record in logos %}
             {# Use spaceless tag to remove spaces inside the A tag. #}
             {% spaceless %}
@@ -108,6 +108,12 @@ return Response::download($pathToFile, $fileName, $headers);
                         <input type="hidden" value="{{record.file_eps.id}}" name="id">
                         <button type="submit" class="btn btn-primary" data-attach-loading>SVG <i class="pr p-download"></i> </button>
                         {{ form_close() }}
+                        {% endif %}
+
+                        {% if record.file_pdf %}
+                        
+                        <a class="btn btn-primary" href="{{record.file_pdf.path}}" target="_blank">PDF <i class="pr p-download"></i> </a>
+                       
                         {% endif %}
                     </div>
                 </div>

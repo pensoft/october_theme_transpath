@@ -169,19 +169,22 @@ $(document).ready(function() {
 
 	var count = $("h1").text().length;
 
-	$('.tabs').each(function(){
+    console.log($(location.hash));
+
+	$('.tabs:not(#mylibraryForm)').each(function(){
 		// For each set of tabs, we want to keep track of
 		// which tab is active and its associated content
 		var $active, $content, $links = $(this).find('a');
 		var speed = "fast";
+        
 		var activeTab = $(location.hash);
 		// If the location.hash matches one of the links, use that as the active tab.
 		// If no match is found, use the first link as the initial active tab.
 		$active = $($links.filter("[href=\'"+location.hash+"\']")[0] || $links[0]);
 
-        // if(!$(this).parent().parent().hasClass('library')){
-        //     $active.addClass('active');
-        // }
+        if(!$(this).parent().parent().hasClass('library')){
+            $active.addClass('active');
+        }
 
 		$content = $($active[0].hash);
 

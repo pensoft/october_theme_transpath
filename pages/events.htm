@@ -91,13 +91,13 @@ $this['slug'] = $this->param('slug');
                     <div class="row" style="margin-top: 80px;">
                         {% if entry.cover_image %}
         
-                            <div class="col-md-2 col-xs-12">
+                            <div class="col-lg-2 col-md-3 col-xs-12">
                            
                                 <a href="{{'events'|page}}/{{entry.slug}}"><img class="content" src="{{ entry.cover_image|crop_image|resize(193, auto, { mode: 'crop' }) }}" style="border-radius: 20px;"/></a>
                             </div>
 
                         {% endif %}
-                            <div class="col-md col-xs-12">
+                            <div class="col-lg col-md col-xs-12">
                                 <div class="row middle-xs">
                                     <div class="col-md-9 col-xs-12 content_text">
                                         <a href="{{'events'|page}}/{{entry.slug}}"><span class="date_week mb-1">{{entry.title|raw}}</span></a>
