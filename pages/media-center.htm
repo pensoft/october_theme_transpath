@@ -45,247 +45,220 @@ return Response::download($pathToFile, $fileName, $headers);
 ?>
 ==
 {% component 'siteSearchInclude' %}
-    <div class="container media-tabs">
-        <div class="tabs">
-            {% if logos.count() %}
-            <a href="#brand-kit" title="Brand kit">Brand kit</a>
-            {% endif %}
-
-            {% if flyers.count() %}
-            <a href="#promotional-materials" title="Promotional materials">Promotional materials</a>
-            {% endif %}
-
-
-            {% if pressreleases.count() %}
-            <a href="#press-releases" title="Press releases">Press releases</a>
-            {% endif %}
-
-            {% if newsletters.count() %}
-            <a href="#newsletters" title="Newsletters">Newsletters</a>
-            {% endif %}
-
-
-            {% if videos.count() %}
-            <a href="#videos" title="Videos">Videos</a>
-            {% endif %}
-
-
-
-            {% if presentations.count() %}
-            <a href="#presentations" title="Presentations">Presentations</a>
-            {% endif %}
-        </div>
-    </div>
-
-        <!--tabs content	-->
+<section class="container media-tabs" aria-label="Media navigation">
+    <nav class="tabs" aria-label="Media categories">
         {% if logos.count() %}
-<div class="container">
-        <div class="row card-container-row start-xs logo" id="brand-kit">
-            {% for record in logos %}
-            {# Use spaceless tag to remove spaces inside the A tag. #}
-            {% spaceless %}
-            {% if record.logo_image %}
-            <div class="col-md-4 col-xs-12 center-xs">
-                <p class="logo_container"><img src="{{record.logo_image.path}}" title="{{record.name}}"></p>
-                <div class="col-xs-12">
-                    <div class="text-center">
-                        <div class="card_title">Download {{record.name}}</div>
-                        {% if record.file_jpg %}
-                        {{form_open({ request: 'onDownloadFile' }) }}
-                        <input type="hidden" value="{{record.file_jpg.id}}" name="id">
-                        <button type="submit" class="btn btn-primary" data-attach-loading>JPG <i class="pr p-download"></i></button>
-                        {{ form_close() }}
-
-                        {% endif %}
-                        {% if record.file_png %}
-                        {{form_open({ request: 'onDownloadFile' }) }}
-                        <input type="hidden" value="{{record.file_png.id}}" name="id">
-                        <button type="submit" class="btn btn-primary" data-attach-loading>PNG <i class="pr p-download"></i> </button>
-                        {{ form_close() }}
-                        {% endif %}
-                        {% if record.file_eps %}
-                        {{form_open({ request: 'onDownloadFile' }) }}
-                        <input type="hidden" value="{{record.file_eps.id}}" name="id">
-                        <button type="submit" class="btn btn-primary" data-attach-loading>SVG <i class="pr p-download"></i> </button>
-                        {{ form_close() }}
-                        {% endif %}
-
-                        {% if record.file_pdf %}
-                        
-                        <a class="btn btn-primary" href="{{record.file_pdf.path}}" target="_blank">PDF <i class="pr p-download"></i> </a>
-                       
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-
-            {% endspaceless %}
-            {% else %}
-            {{ noRecordsMessage }}
-            {% endfor %}
-        </div>
-</div>
+        <a href="#brand-kit">Brand kit</a>
         {% endif %}
 
         {% if flyers.count() %}
-<div class="container">
-        <div class="row card-container-row start-xs flyer" id="promotional-materials" style="display: none;">
-            {% for record in flyers %}
-            {# Use spaceless tag to remove spaces inside the A tag. #}
-            {% spaceless %}
-            {% if record.flyer_image %}
-            <div class="col-md-4 col-xs-12 center-xs">
-                <h3><b>{{record.name}}</b></h3>
-                <p class="logo_container"><img src="{{record.flyer_image.path}}" title="{{record.name}}"></p>
-
-                {% if record.file %}
-                <div class="col-xs-12">
-                    <div class="text-center">
-
-                        {{form_open({ request: 'onDownloadFile' }) }}
-                        <input type="hidden" value="{{record.file.id}}" name="id">
-                        <button type="submit" class="btn btn-primary" data-attach-loading>Download <i class="pr p-download"></i></button>
-                        {{ form_close() }}
-
-                    </div>
-                </div>
-                {% endif %}
-
-            </div>
-
-
-            {% endif %}
-
-            {% endspaceless %}
-            {% else %}
-            {{ noRecordsMessage }}
-            {% endfor %}
-        </div>
-</div>
+        <a href="#promotional-materials">Promotional materials</a>
         {% endif %}
 
         {% if pressreleases.count() %}
-    <div class="container">
-        <div class="row card-container-row start-xs press-releases press-relieses-container" id="press-releases" style="display: none;">
-            {% for record in pressreleases %}
-            <div class="col-xs-12">
-                <div class="press-relies-item">
-                    <span class="date"> {{record.date |date('d F Y')}}</span> <br><br>
-                    <span class="card_title">{{record.name}}</span><br><br>
-
-                    <div class="body">{{record.description | raw}}</div>
-                    <div class="row link">
-                        {% for link in record.link %}
-                        <a href="{{link.url}}" target="_blank" class="btn btn-primary">{{link.text}}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+        <a href="#press-releases">Press releases</a>
         {% endif %}
 
         {% if newsletters.count() %}
-
-    <div class="container">
-        <div class="row card-container-row start-xs newsletters" id="newsletters" style="display: none;">
-            {% for record in newsletters %}
-            {# <div class="col-md-12 col-xs-12 newsletter_item">
-                <div class="newsletter-iframe">
-                    <iframe width="100%" height="783" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            src="{{record.url}}">
-                    </iframe>
-                </div>
-            </div> #}
-
-            <div class="col-md-4 col-xs-12 center-xs">
-                <h3><b>{{record.name}}</b></h3>
-                <p class="newsletter_container"><img src="{{record.newsletter_image.thumb(380,240,{'mode':'crop'})}}" title="{{record.name}}"></p>
-
-                {% if record.url %}
-                <div class="col-xs-12">
-                    <div class="text-center">
-                        <a class="link btn btn-primary mb-1" href="{{record.url}}" target="_blank">Read the newsletter</a>
-                    </div>
-                </div>
-                {% else %}
-                {% if record.file %}
-                <div class="col-xs-12">
-                    <div class="text-center">
-                        {{form_open({ request: 'onDownloadFile' }) }}
-                        <input type="hidden" value="{{record.file.id}}" name="id">
-                        <button type="submit" class="btn btn-primary" data-attach-loading>Download <i class="pr p-download"></i></button>
-                        {{ form_close() }}
-
-<!--                        <a class="link btn btn-primary btn-newsletters" style="max-width: unset" href="{{ '/newsletters?download=' ~ record.file.id ~ '&file_name=' ~ record.name|url_encode }}">Download the newsletter</a>-->
-                    </div>
-                </div>
-                {% endif %}
-                {% endif %}
-
-<!--                {% if record.file %}-->
-<!--                <div class="col-xs-12">-->
-<!--                    <div class="text-center">-->
-
-
-<!--                        <a class="link btn btn-primary mb-1" href="{{record.url}}" target="_blank">Read the newsletter</a>-->
-
-<!--                        {{form_open({ request: 'onDownloadFile' }) }}-->
-<!--                        <input type="hidden" value="{{record.file.id}}" name="id">-->
-<!--                        <button type="submit" class="btn btn-primary" data-attach-loading>Download <i class="pr p-download"></i></button>-->
-<!--                        {{ form_close() }}-->
-
-<!--                    </div>-->
-<!--                </div>-->
-<!--                {% endif %}-->
-
-            </div>
-
-            {% endfor %}
-        </div>
-    </div>
-
+        <a href="#newsletters">Newsletters</a>
         {% endif %}
 
         {% if videos.count() %}
-        <div class="container">
-        <div class="row card-container-row start-xs videos" id="videos" style="display: none;">
-            {% for record in videos %}
-            <div class="col-md-6 col-xs-12">
-                <div class="">
-                    <p class="card_title font-weight-bold">{{record.name}}</p>
-                    
-                    {% if record.youtube_url %}
-                    <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="{{record.youtube_url}}" width="100%" height="422"></iframe>
+        <a href="#videos">Videos</a>
+        {% endif %}
 
-               
+        {% if presentations.count() %}
+        <a href="#presentations">Presentations</a>
+        {% endif %}
+    </nav>
+</section>
+
+<!--tabs content	-->
+{% if logos.count() %}
+<section class="container" id="brand-kit" aria-labelledby="brand-kit-heading">
+    <h2 id="brand-kit-heading" class="sr-only">Brand kit</h2>
+    <div class="row card-container-row start-xs logo">
+        {% for record in logos %}
+        {# Use spaceless tag to remove spaces inside the A tag. #}
+        {% spaceless %}
+        {% if record.logo_image %}
+        <article class="col-md-4 col-xs-12 center-xs">
+            <p class="logo_container"><img src="{{record.logo_image.path}}" alt="{{record.name}} logo"></p>
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <div class="card_title">Download {{record.name}}</div>
+                    {% if record.file_jpg %}
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file_jpg.id}}" name="id">
+                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}} as JPG">JPG <i class="pr p-download" aria-hidden="true"></i></button>
+                    {{ form_close() }}
+
+                    {% endif %}
+                    {% if record.file_png %}
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file_png.id}}" name="id">
+                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}} as PNG">PNG <i class="pr p-download" aria-hidden="true"></i> </button>
+                    {{ form_close() }}
+                    {% endif %}
+                    {% if record.file_eps %}
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file_eps.id}}" name="id">
+                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}} as SVG">SVG <i class="pr p-download" aria-hidden="true"></i> </button>
+                    {{ form_close() }}
                     {% endif %}
 
-                    {% if record.vimeo_url %}
-                    <iframe width="100%" height="422" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            src="{{record.vimeo_url}}">
-                    </iframe>
-                    
+                    {% if record.file_pdf %}
+
+                    <a class="btn btn-primary" href="{{record.file_pdf.path}}" target="_blank" rel="noopener noreferrer" aria-label="Download {{record.name}} as PDF (opens in new window)">PDF <i class="pr p-download" aria-hidden="true"></i> </a>
+
                     {% endif %}
+                </div>
+            </div>
+        </article>
+        {% endif %}
 
-                    {% if record.file %}
-                    <!--<video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
+        {% endspaceless %}
+        {% else %}
+        {{ noRecordsMessage }}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 
-                    <p>Attachment: {{record.file.file_name}}, {{record.file.size}}</p>-->
+{% if flyers.count() %}
+<section class="container" id="promotional-materials" aria-labelledby="promotional-materials-heading">
+    <h2 id="promotional-materials-heading" class="sr-only">Promotional materials</h2>
+    <div class="row card-container-row start-xs flyer" style="display: none;">
+        {% for record in flyers %}
+        {# Use spaceless tag to remove spaces inside the A tag. #}
+        {% spaceless %}
+        {% if record.flyer_image %}
+        <article class="col-md-4 col-xs-12 center-xs">
+            <h3><b>{{record.name}}</b></h3>
+            <p class="logo_container"><img src="{{record.flyer_image.path}}" alt="{{record.name}}"></p>
+
+            {% if record.file %}
+            <div class="col-xs-12">
+                <div class="text-center">
 
                     {{form_open({ request: 'onDownloadFile' }) }}
                     <input type="hidden" value="{{record.file.id}}" name="id">
-                    <button type="submit" class="btn btn-primary" data-attach-loading>Download <i class="pr p-download"></i></button>
+                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></button>
                     {{ form_close() }}
-
-
-                    {% endif %}
 
                 </div>
             </div>
-            {% endfor %}
-        </div>
-        </div>
+            {% endif %}
+
+        </article>
+
+
         {% endif %}
+
+        {% endspaceless %}
+        {% else %}
+        {{ noRecordsMessage }}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if pressreleases.count() %}
+<section class="container" id="press-releases" aria-labelledby="press-releases-heading">
+    <h2 id="press-releases-heading" class="sr-only">Press releases</h2>
+    <div class="row card-container-row start-xs press-releases press-relieses-container" style="display: none;">
+        {% for record in pressreleases %}
+        <article class="col-xs-12">
+            <div class="press-relies-item">
+                <span class="date"> {{record.date |date('d F Y')}}</span> <br><br>
+                <span class="card_title">{{record.name}}</span><br><br>
+
+                <div class="body">{{record.description | raw}}</div>
+                <div class="row link">
+                    {% for link in record.link %}
+                    <a href="{{link.url}}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">{{link.text}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if newsletters.count() %}
+<section class="container" id="newsletters" aria-labelledby="newsletters-heading">
+    <h2 id="newsletters-heading" class="sr-only">Newsletters</h2>
+    <div class="row card-container-row start-xs newsletters" style="display: none;">
+        {% for record in newsletters %}
+
+        <article class="col-md-4 col-xs-12 center-xs">
+            <h3><b>{{record.name}}</b></h3>
+            <p class="newsletter_container"><img src="{{record.newsletter_image.thumb(380,240,{'mode':'crop'})}}" alt="{{record.name}}"></p>
+
+            {% if record.url %}
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <a class="link btn btn-primary mb-1" href="{{record.url}}" target="_blank" rel="noopener noreferrer">Read the newsletter</a>
+                </div>
+            </div>
+            {% else %}
+            {% if record.file %}
+            <div class="col-xs-12">
+                <div class="text-center">
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file.id}}" name="id">
+                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></button>
+                    {{ form_close() }}
+
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+
+        </article>
+
+        {% endfor %}
+    </div>
+</section>
+
+{% endif %}
+
+{% if videos.count() %}
+<section class="container" id="videos" aria-labelledby="videos-heading">
+    <h2 id="videos-heading" class="sr-only">Videos</h2>
+    <div class="row card-container-row start-xs videos" style="display: none;">
+        {% for record in videos %}
+        <article class="col-md-6 col-xs-12">
+            <div class="">
+                <p class="card_title font-weight-bold">{{record.name}}</p>
+
+                {% if record.youtube_url %}
+                <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="{{record.youtube_url}}" width="100%" height="422" title="{{record.name}}"></iframe>
+
+
+                {% endif %}
+
+                {% if record.vimeo_url %}
+                <iframe width="100%" height="422" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        src="{{record.vimeo_url}}" title="{{record.name}}">
+                </iframe>
+
+                {% endif %}
+
+                {% if record.file %}
+
+                {{form_open({ request: 'onDownloadFile' }) }}
+                <input type="hidden" value="{{record.file.id}}" name="id">
+                <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></button>
+                {{ form_close() }}
+
+
+                {% endif %}
+
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}

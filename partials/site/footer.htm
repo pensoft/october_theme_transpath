@@ -22,12 +22,12 @@ link = "/privacy-policy#cookies"
 theme = "dark-bottom"
 ==
 <div class="container-fluid border-box dark-background">{% component 'cookieConsent' %}
-	<div class="container">
-		<div class="row top-xs between-xs footer-menu-container">
+    <div class="container">
+        <div class="row top-xs between-xs footer-menu-container">
             <div class="col-md-6 col-xs-12 footer-right-border">
                 <div class="row">
                     <div class="col-xs-12 start-lg center-xs">
-                        <img class="project_footer_logo" src="{{ 'assets/images/TransPath-logo-monochrome.svg'|theme }}" />
+                        <img class="project_footer_logo" src="{{ 'assets/images/TransPath-logo-monochrome.svg'|theme }}" alt="TransPath logo" />
                     </div>
                 </div>
                 <div class="row between-xs">
@@ -45,21 +45,21 @@ theme = "dark-bottom"
                             <div class="social-networks">
                                 <div class="icons mt-1">
                                     {% if enable_facebook and facebook_url %}
-                                    <a href="{{facebook_url}}" target="_blank" class="pr p-secondary p-facebook big" target="_blank"></a>
+                                    <a href="{{facebook_url}}" target="_blank" rel="noopener noreferrer" class="pr p-secondary p-facebook big" aria-label="Facebook (opens in new window)"></a>
                                     {% endif %}
                                     {% if enable_twitter and twitter_url %}
-                                    <a href="{{twitter_url}}" target="_blank" class="pr p-secondary p-twitter normal" target="_blank" style="margin-top: 5px;"></a>
+                                    <a href="{{twitter_url}}" target="_blank" rel="noopener noreferrer" class="pr p-secondary p-twitter normal" style="margin-top: 5px;" aria-label="Twitter (opens in new window)"></a>
                                     {% endif %}
                                     {% if enable_linkedin and linkedin_url %}
-                                    <a  href="{{linkedin_url}}" target="_blank" class="pr p-secondary p-linkedin big" target="_blank"></a>
+                                    <a href="{{linkedin_url}}" target="_blank" rel="noopener noreferrer" class="pr p-secondary p-linkedin big" aria-label="LinkedIn (opens in new window)"></a>
                                     {% endif %}
                                     {% if enable_youtube and youtube_url %}
-                                    <a  href="{{youtube_url}}" target="_blank" class="pr p-secondary p-youtube big" target="_blank"></a>
+                                    <a href="{{youtube_url}}" target="_blank" rel="noopener noreferrer" class="pr p-secondary p-youtube big" aria-label="YouTube (opens in new window)"></a>
                                     {% endif %}
                                     {% if enable_instagram and instagram_url %}
-                                    <a  href="{{instagram_url}}" target="_blank" class="pr p-secondary p-instagram big" target="_blank"></a>
+                                    <a href="{{instagram_url}}" target="_blank" rel="noopener noreferrer" class="pr p-secondary p-instagram big" aria-label="Instagram (opens in new window)"></a>
                                     {% endif %}
-                                    <a href="{{'contact'|page}}" class="pr p-secondary p-mail big"></a>
+                                    <a href="{{'contact'|page}}" class="pr p-secondary p-mail big" aria-label="Contact us"></a>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@ theme = "dark-bottom"
                 </div>
                 {% if this.theme.subscribe %}
                 <div class="row between-xs middle-xs subscribe_footer">
-                    Sign up to our newsletter and stay up to date! <a href="{{this.theme.subscribe}}" target="_blank" class="btn btn-primary">Subscribe</a>
+                    Sign up to our newsletter and stay up to date! <a href="{{this.theme.subscribe}}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Subscribe</a>
                 </div>
                 {% endif %}
 
@@ -77,27 +77,27 @@ theme = "dark-bottom"
                 {% if (footer_funds_flag != null or footer_funds_text != '') %}
                 <div class="funding flex-column my-1 my-lg-0 flex-lg-row px-1 align-items-center col-sm col-xs-12">
                     {% if footer_funds_flag %}
-                    <img class="text mr-0 mr-lg-1" style="height:50px;" src="{{ footer_funds_flag }}"/>
+                    <img class="text mr-0 mr-lg-1" style="height:50px;" src="{{ footer_funds_flag }}" alt="European Union flag"/>
                     {% endif %}
                     {% if footer_funds_text %}
                     <span class="align-items-center mt-sm-0 mt-1"><b>{{footer_funds_text}}</b></span>
                     {%endif %}
                 </div>
                 <div class="funding-text">
-                    <p>TRANSPATH receives funding from the European Union’s Horizon Europe research and innovation programme under grant agreement No. 101081984.</p>
+                    <p>TRANSPATH receives funding from the European Union's Horizon Europe research and innovation programme under grant agreement No. 101081984.</p>
                     <p>Views and opinions expressed are those of the author(s) only and do not necessarily reflect those of the European Union or the European Commission. Neither the EU nor the EC can be held responsible for them.</p>
                 </div>
                 {% endif %}
                 <div class="row between-xs middle-xs">
                     <div class="col-md-8 col-xs-12">
                         <div class="powered-by my-1 my-lg-0 px-1 start-sm center-xs">
-                        <span>Designed and powered by <a href="https://pensoft.net/" target="_blank">
-                            <img class="pensoft_logo" src="{{ 'assets/images/pensoft-logo.svg'|theme }}" /></a>
+                        <span>Designed and powered by <a href="https://pensoft.net/" target="_blank" rel="noopener noreferrer">
+                            <img class="pensoft_logo" src="{{ 'assets/images/pensoft-logo.svg'|theme }}" alt="Pensoft" /></a>
                         </span></div>
                     </div>
                     <div class="col-sm-4 col-xs-12 center-xs privacy-policy-link"><a style="flex:0 0 auto; font-size: 17px; font-weight: bold;" href="/privacy-policy">Privacy Policy</a></div>
                 </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>

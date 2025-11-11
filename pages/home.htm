@@ -27,42 +27,42 @@ function onStart(){
 ?>
 ==
 <!-- latest from news -->
-        <div class="container highlights-news">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h1 class="base_heading highlight_new_template_3">Latest news</h1>
-                </div>
-            </div>
-            <div class="row newslist">
-                <div class="col-xs-12">
-                    {% for highlight in highlights %}
-                    <div class="col-xs-12 col-md-3 news-item item-">
-                        <div class="row news_column aos-init aos-animate" data-aos="fade-up">
-                            <a class="news-image col-xs-12 center-xs" href="{{'news'|page}}/{{highlight.href}}">
-                                <img class="news-img-top" src="{{highlight.cover.thumb(296, 224, {'mode': 'crop'})}}">
-                            </a>
-                            <div class="news-container col-xs-12">
-                                <div class="text-published">{{highlight.pretty_published_at}}</div>
-                                <div class="news-title">
-                                    <h3 class="card-title"><a href="{{'news'|page}}/{{highlight.href}}">{{highlight.title}}</a></h3>
-                                </div>
-                                <div class="news-description">
-                                    {{highlight.content|raw}}
-                                </div>
-                                <a class="read_more" href="{{'news'|page}}/{{highlight.href}}">
-                                    Read more <i></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+<section class="container highlights-news" aria-labelledby="latest-news-heading">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 id="latest-news-heading" class="base_heading highlight_new_template_3">Latest news</h1>
         </div>
+    </div>
+    <div class="row newslist">
+        <div class="col-xs-12">
+            {% for highlight in highlights %}
+            <article class="col-xs-12 col-md-3 news-item item-">
+                <div class="row news_column aos-init aos-animate" data-aos="fade-up">
+                    <a class="news-image col-xs-12 center-xs" href="{{'news'|page}}/{{highlight.href}}" aria-label="{{highlight.title}}">
+                        <img class="news-img-top" src="{{highlight.cover.thumb(296, 224, {'mode': 'crop'})}}" alt="{{highlight.title}}">
+                    </a>
+                    <div class="news-container col-xs-12">
+                        <div class="text-published">{{highlight.pretty_published_at}}</div>
+                        <div class="news-title">
+                            <h3 class="card-title"><a href="{{'news'|page}}/{{highlight.href}}">{{highlight.title}}</a></h3>
+                        </div>
+                        <div class="news-description">
+                            {{highlight.content|raw}}
+                        </div>
+                        <a class="read_more" href="{{'news'|page}}/{{highlight.href}}" aria-label="Read more about {{highlight.title}}">
+                            Read more <i aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-<div class="container-fluid upcoming-events">
+<section class="container-fluid upcoming-events" aria-labelledby="upcoming-events-heading">
     <div class="container">
-        <h1 class="base_heading">UPCOMING EVENTS</h1>
+        <h1 id="upcoming-events-heading" class="base_heading">UPCOMING EVENTS</h1>
         {% component 'Timeline' %}
     </div>
-</div>
+</section>

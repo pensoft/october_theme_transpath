@@ -66,23 +66,23 @@ $this['slug'] = $this->param('slug');
 ?>
 ==
 {% if not slug %}
-<div class="container">
-    <div class="tabs">
-        <a class="" href="#listView">List view</a>
-        <a class="" href="#calendarView">Calendar view</a>
-
-    </div>
-</div>
+<section class="container" aria-label="Event view options">
+    <nav class="tabs" aria-label="Event view navigation">
+        <a href="#listView">List view</a>
+        <a href="#calendarView">Calendar view</a>
+    </nav>
+</section>
 <!--tabs content	-->
 <div class="container-fluid">
     <div class="container">
 
-        <div class="row" id="listView">
+        <section class="row" id="listView" aria-labelledby="list-view-heading">
+            <h2 id="list-view-heading" class="sr-only">Event list view</h2>
             <div class="events_list_container">
                 {% for entry in entries %}
                 {% set url = entry.url ?  entry.url : '/events/' ~ entry.slug %}
 
-                <div class="row entry_item middle-xs">
+                <article class="row entry_item middle-xs">
                     <div class="date_container">
                         <span class="date_day">{{entry.start|date("d")}} &nbsp; |</span>
                         <span class="date_month">{{entry.start|date("M")}} &nbsp;  |</span>
@@ -90,27 +90,27 @@ $this['slug'] = $this->param('slug');
                     </div>
                     <div class="row" style="margin-top: 80px;">
                         {% if entry.cover_image %}
-        
-                            <div class="col-lg-2 col-md-3 col-xs-12">
-                           
-                                <a href="{{'events'|page}}/{{entry.slug}}"><img class="content" src="{{ entry.cover_image|crop_image|resize(193, auto, { mode: 'crop' }) }}" style="border-radius: 20px;"/></a>
-                            </div>
+
+                        <div class="col-lg-2 col-md-3 col-xs-12">
+
+                            <a href="{{'events'|page}}/{{entry.slug}}" aria-label="{{entry.title}}"><img class="content" src="{{ entry.cover_image|crop_image|resize(193, auto, { mode: 'crop' }) }}" alt="{{entry.title}}" style="border-radius: 20px;"/></a>
+                        </div>
 
                         {% endif %}
-                            <div class="col-lg col-md col-xs-12">
-                                <div class="row middle-xs">
-                                    <div class="col-md-9 col-xs-12 content_text">
-                                        <a href="{{'events'|page}}/{{entry.slug}}"><span class="date_week mb-1">{{entry.title|raw}}</span></a>
-                                        {{ entry.description|length > 200 ? entry.description|striptags|slice(0, 200) ~ '...' : entry.description|raw  }}
-                                    </div>
-                                    <div class="col-md-3 col-xs-12 end-md center-xs">
-                                        <a href="{{'events'|page}}/{{entry.slug}}" class="read_more">Read more <i></i></a>
-                                    </div>
+                        <div class="col-lg col-md col-xs-12">
+                            <div class="row middle-xs">
+                                <div class="col-md-9 col-xs-12 content_text">
+                                    <a href="{{'events'|page}}/{{entry.slug}}"><span class="date_week mb-1">{{entry.title|raw}}</span></a>
+                                    {{ entry.description|length > 200 ? entry.description|striptags|slice(0, 200) ~ '...' : entry.description|raw  }}
+                                </div>
+                                <div class="col-md-3 col-xs-12 end-md center-xs">
+                                    <a href="{{'events'|page}}/{{entry.slug}}" class="read_more" aria-label="Read more about {{entry.title}}">Read more <i aria-hidden="true"></i></a>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                    
-                </div>
+
+                </article>
 
                 {% endfor %}
             </div>
@@ -120,10 +120,11 @@ $this['slug'] = $this->param('slug');
             </div>
             {% endif %}
 
-        </div>
-        <div class="row" id="calendarView">
+        </section>
+        <section class="row" id="calendarView" aria-labelledby="calendar-view-heading">
+            <h2 id="calendar-view-heading" class="sr-only">Event calendar view</h2>
             {% component 'calendar' %}
-        </div>
+        </section>
 
     </div>
 
@@ -133,13 +134,13 @@ $this['slug'] = $this->param('slug');
 {% else %}
 
 {% if entry %}
-<div class="container">
+<article class="container">
     <div class="row single-news-item">
         {% if entry.cover_image %}
-        
+
         <div class="col-md col-xs-12">
-       
-            <img class="content" src="{{ entry.cover_image|crop_image|resize(623, auto, { mode: 'crop' }) }}" />
+
+            <img class="content" src="{{ entry.cover_image|crop_image|resize(623, auto, { mode: 'crop' }) }}" alt="{{entry.title}}" />
         </div>
 
         {% endif %}
@@ -161,7 +162,7 @@ $this['slug'] = $this->param('slug');
         <div class="col-xs-12">
 
             {% if entry.url %}
-            <br><br><a href="{{entry.url}}" class="read_more" target="_blank">Go to event website</a>
+            <br><br><a href="{{entry.url}}" class="read_more" target="_blank" rel="noopener noreferrer">Go to event website</a>
             {% endif %}
 
 
@@ -169,11 +170,11 @@ $this['slug'] = $this->param('slug');
             <div class="row share_container middle-xs">
                 <div class="col-lg-1 col-xs-2 start-xs">Share</div>
                 <div class="col-xs-10">
-                    <a href="http://twitter.com/share?text={{entry.title}}&url={{page_url}}" target="_blank" class="btn p-primary pr p-twitter medium"></a>
+                    <a href="http://twitter.com/share?text={{entry.title}}&url={{page_url}}" target="_blank" rel="noopener noreferrer" class="btn p-primary pr p-twitter medium" aria-label="Share on Twitter (opens in new window)"></a>
 
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="btn pr p-primary p-facebook medium"></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" rel="noopener noreferrer" class="btn pr p-primary p-facebook medium" aria-label="Share on Facebook (opens in new window)"></a>
 
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="btn pr p-primary p-linkedin medium"></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" rel="noopener noreferrer" class="btn pr p-primary p-linkedin medium" aria-label="Share on LinkedIn (opens in new window)"></a>
 
                 </div>
             </div>
@@ -181,7 +182,7 @@ $this['slug'] = $this->param('slug');
 
         </div>
     </div>
-</div>
+</article>
 
 {% endif %}
 

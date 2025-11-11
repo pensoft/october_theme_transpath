@@ -86,11 +86,11 @@ $this['related'] = $related;
 ?>
 ==
 {% if is_detail_page %}
-<div class="container">
+<article class="container">
     <div class="row single-news-item">
         {% if article.cover %}
         <div class="col-md-5 col-xs-12">
-            <img class="content" src="{{ article.cover|crop_image|resize(626, auto, { mode: 'crop' }) }}" />
+            <img class="content" src="{{ article.cover|crop_image|resize(626, auto, { mode: 'crop' }) }}" alt="{{article.title}}" />
             {% if article.caption %}
             {{article.caption|raw}}
             {% endif %}
@@ -113,11 +113,11 @@ $this['related'] = $related;
             <div class="row share_container middle-xs">
                 <div class="col-lg-1 col-xs-2 start-xs">Share</div>
                 <div class="col-xs-10">
-                    <a href="http://twitter.com/share?text={{article.title}}&url={{page_url}}" target="_blank" class="btn p-primary pr p-twitter medium" style="font-size: 22px !important;"></a>
+                    <a href="http://twitter.com/share?text={{article.title}}&url={{page_url}}" target="_blank" rel="noopener noreferrer" class="btn p-primary pr p-twitter medium" style="font-size: 22px !important;" aria-label="Share on Twitter (opens in new window)"></a>
 
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="btn pr p-primary p-facebook medium"></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" rel="noopener noreferrer" class="btn pr p-primary p-facebook medium" aria-label="Share on Facebook (opens in new window)"></a>
 
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="btn pr p-primary p-linkedin medium"></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" rel="noopener noreferrer" class="btn pr p-primary p-linkedin medium" aria-label="Share on LinkedIn (opens in new window)"></a>
 
                 </div>
             </div>
@@ -125,18 +125,18 @@ $this['related'] = $related;
 
         </div>
     </div>
-</div>
+</article>
 {% else %}
-<div class="container">
+<section class="container" aria-label="News articles">
     <div class="row newslist around-xs">
         {% for highlight in records %}
-        <div class="col-xs-12 col-md-4 news-item item-{{highlight.slug}}">
+        <article class="col-xs-12 col-md-4 news-item item-{{highlight.slug}}">
 
 
             <div class="row news_column">
-                <a href="{{'news'|page}}/{{highlight.slug}}">
+                <a href="{{'news'|page}}/{{highlight.slug}}" aria-label="{{highlight.title}}">
                     <div class="news_image">
-                        <img class="news-img-top" src="{{ highlight.cover|crop_image|resize(379, 232, {'mode': 'crop'}) }}" />
+                        <img class="news-img-top" src="{{ highlight.cover|crop_image|resize(379, 232, {'mode': 'crop'}) }}" alt="{{highlight.title}}" />
                     </div>
                     <div class="news-container">
                         <div class="wrapper">
@@ -145,11 +145,11 @@ $this['related'] = $related;
                                 <h3 class="card-title">{{ highlight.title|length > 200 ? highlight.title|striptags|slice(0, 200) ~ '...' : highlight.title|raw  }}</h3>
                             </div>
                         </div>
-                        <div class="read_more">Read more <i></i></div>
+                        <div class="read_more">Read more <i aria-hidden="true"></i></div>
                     </div>
                 </a>
             </div>
-        </div>
+        </article>
 
 
         {% endfor %}
@@ -158,5 +158,5 @@ $this['related'] = $related;
         {{ records.render|raw }}
     </div>
 
-</div>
+</section>
 {% endif %}
