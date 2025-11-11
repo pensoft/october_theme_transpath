@@ -10,7 +10,7 @@
         <div class="row top-xs">
             <div class="col-xs-12 partner-item">
                 <div class="col-xs-12">
-                    <h4><a href="{{partner.instituion_url}}" target="_blank">{{partner.instituion}}</a></h4>
+                    <h4><a href="{{partner.instituion_url}}" target="_blank" rel="noopener noreferrer">{{partner.instituion}}</a></h4>
                     <div class="country_label">{{partner.country[0].name}}</div>
                     <div class="partner_description">{{partner.content|raw}}</div>
                     {% if insider_members.getIM(partner.id).count > 0 %}
@@ -22,22 +22,21 @@
                             <div class="accordion-content" style="display: none;">
                                 <div class="row top-xs">
                                     {% for profile in insider_members.getIM(partner.id) %}
-                                    <div class="col-md-12 col-xs-12">
+                                    <article class="col-md-12 col-xs-12">
                                         <div class="contact_info row">
-                                            <div class="col-md-5 col-xs-12 coordinator_image">
+                                            <div class="col-md-5 col-xs-12 coordinator_image aos-init aos-animate" data-aos="fade-up">
                                                 {% if profile.avatar %}
-                                                <!--                            <img alt="{{ profile.names }}" src="{{profile.avatar.thumb(175,145,{'mode':'crop'})}}">-->
-                                                <img alt="{{ profile.names }}" src="{{profile.avatar.thumb(119,119,{'mode':'crop'})}}">
+                                                <img alt="{{ profile.names }}" src="{{profile.avatar.thumb(126,126,{'mode':'crop'})}}">
                                                 {% else %}
-                                                <img alt="{{ profile.names }}" src="{{ 'avatar.svg'|media }}" width="119" height="119" class="no-image">
+                                                <img alt="{{ profile.names }}" src="{{ 'avatar.svg'|media }}" width="126" height="126" class="no-image">
                                                 {% endif %}
                                             </div>
                                             <div class="col-md col-xs-12 coordinator_info">
                                                 <h2>{{ profile.names }}</h2>
                                             </div>
-                                            <div class="col-xs-12 body pt-1">{{ profile.content|raw }}</div>
+                                            <div class="col-xs-12"><p class="contact_affiliation">{{ profile.content|raw }}</p></div>
                                         </div>
-                                    </div>
+                                    </article>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -49,6 +48,4 @@
         </div>
     </div>
 </div>
-
-
 {% endfor %}
