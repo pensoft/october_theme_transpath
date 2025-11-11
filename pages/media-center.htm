@@ -128,7 +128,7 @@ return Response::download($pathToFile, $fileName, $headers);
 {% if flyers.count() %}
 <section class="container" id="promotional-materials" aria-labelledby="promotional-materials-heading">
     <h2 id="promotional-materials-heading" class="sr-only">Promotional materials</h2>
-    <div class="row card-container-row start-xs flyer" style="display: none;">
+    <div class="row card-container-row start-xs flyer">
         {% for record in flyers %}
         {# Use spaceless tag to remove spaces inside the A tag. #}
         {% spaceless %}
@@ -166,7 +166,7 @@ return Response::download($pathToFile, $fileName, $headers);
 {% if pressreleases.count() %}
 <section class="container" id="press-releases" aria-labelledby="press-releases-heading">
     <h2 id="press-releases-heading" class="sr-only">Press releases</h2>
-    <div class="row card-container-row start-xs press-releases press-relieses-container" style="display: none;">
+    <div class="row card-container-row start-xs press-releases press-relieses-container">
         {% for record in pressreleases %}
         <article class="col-xs-12">
             <div class="press-relies-item">
@@ -189,7 +189,7 @@ return Response::download($pathToFile, $fileName, $headers);
 {% if newsletters.count() %}
 <section class="container" id="newsletters" aria-labelledby="newsletters-heading">
     <h2 id="newsletters-heading" class="sr-only">Newsletters</h2>
-    <div class="row card-container-row start-xs newsletters" style="display: none;">
+    <div class="row card-container-row start-xs newsletters">
         {% for record in newsletters %}
 
         <article class="col-md-4 col-xs-12 center-xs">
@@ -227,7 +227,7 @@ return Response::download($pathToFile, $fileName, $headers);
 {% if videos.count() %}
 <section class="container" id="videos" aria-labelledby="videos-heading">
     <h2 id="videos-heading" class="sr-only">Videos</h2>
-    <div class="row card-container-row start-xs videos" style="display: none;">
+    <div class="row card-container-row start-xs videos">
         {% for record in videos %}
         <article class="col-md-6 col-xs-12">
             <div class="">
