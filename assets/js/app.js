@@ -149,7 +149,7 @@ $(document).ready(function() {
         } else {
             $(this).next(".accordion-content").slideDown(300);
                 $(this).children(".plusminus").html('<span class="minus"></span>');
-            
+
         }
     });
 
@@ -176,7 +176,7 @@ $(document).ready(function() {
 		// which tab is active and its associated content
 		var $active, $content, $links = $(this).find('a');
 		var speed = "fast";
-        
+
 		var activeTab = $(location.hash);
 		// If the location.hash matches one of the links, use that as the active tab.
 		// If no match is found, use the first link as the initial active tab.
@@ -324,6 +324,25 @@ $(document).ready(function() {
 
 
 });
+
+function handleTreeSVGMapMouseMove(event) {
+    var title = $(event.target).parent().attr('title');
+    var desc = $(event.target).parent().attr('desc');
+    var tooltip = document.getElementById("tooltip");
+
+    if (typeof title  == "undefined"){
+        return tooltip.classList.remove("active");
+    }
+    var x = event.clientX;
+    var y = event.clientY;
+
+    tooltip.style.left = (x - 250) + "px";
+    tooltip.style.top = (y - 20) + "px";
+
+    tooltip.innerHTML = '<div class="tooltip_flag_container"><h4>' + title + '</h4><p>' + desc + '</p></div>';
+    tooltip.classList.add("active");
+
+}
 
 function onHashChange(){
 	$("path").removeClass('active_path');

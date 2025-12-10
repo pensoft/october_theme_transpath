@@ -149,7 +149,7 @@
                     padding: 59px 27px!important;
                 });
             }
-            
+
             &:nth-of-type(6){
                 background: url("../../assets/images/obj5.svg") top center no-repeat;
                 background-size: 90%;
@@ -196,6 +196,105 @@
         color: #004165;
         font-size: 24px;
         text-transform: none;
+    }
+}
+
+.toolkit{
+    color: #919191!important;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 111.111% */
+
+    h1.display-1{
+        color: #003B54;
+        text-align: center;
+        font-family: Metropolis;
+        font-size: 35px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        margin-bottom: 18px;
+        text-transform: unset;
+    }
+
+    .about{
+        width: 60%;
+        margin: 0 auto;
+        .container{
+            padding: 0;
+        }
+    }
+
+    .role{
+        width: 60%;
+        margin: 0 auto;
+        .container{
+            padding: 0;
+        }
+    }
+
+    .role_options{
+
+        .role_option{
+            border-radius: 10px;
+            border: 1px solid #CFE1E9;
+            background: #ffffff;
+            width: 485px;
+            height: fit-content;
+            margin: 6px auto;
+            padding: 13px;
+            position: relative;
+            text-align: left;
+            &.selected{
+                background: #F2F9FD;
+            }
+
+            input[type="radio"]{
+                position: absolute;
+                top: 13px;
+                left: 13px;
+                outline: none;
+            }
+
+            input[type="radio"]:checked ~ * {
+                background: #F2F9FD;
+            }
+
+
+
+            .researcher_img{
+                background: url("../../assets/images/researcher_bg.png") center no-repeat;
+                background-size: contain;
+                width: 106px;
+                height: 108px;
+                margin: 0 auto;
+            }
+
+            h4{
+                color: #000;
+                font-size: 19px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                text-transform: unset;
+                margin-bottom: 7px;
+            }
+
+            .role_desc{
+                color: #919191;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px; /* 125% */
+                p{
+                    margin-bottom: 0;
+                }
+            }
+
+
+        }
     }
 }
 

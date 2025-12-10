@@ -1,0 +1,73 @@
+url = "/toolkit"
+layout = "default"
+title = "Toolkit"
+
+[siteSearchInclude]
+
+[jumbotron about_toolkit]
+jumbotron = "about-toolkit"
+title = 1
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
+[jumbotron role]
+jumbotron = "what-role-do-you-play"
+title = 1
+background = "transperant"
+templates = "template3"
+description_limit = 0
+==
+<?php
+use Pensoft\Toolkit\Models\Role;
+
+function onStart()
+{
+    $this['roles'] = Role::get();
+}
+?>
+==
+{% component 'siteSearchInclude' %}
+
+<section class="container" aria-label="About ToolKit">
+    <div class="about">
+        {% component 'about_toolkit' %}
+    </div>
+</section>
+
+<section class="container" aria-label="What role do you play?">
+    <div class="role">
+        {% component 'role' %}
+    </div>
+    <div class="role_options">
+        {% for role in roles %}
+        <div >
+            <label for="{{role.title}}" class="row role_option">
+
+                <input type="radio" id="{{role.title}}" name="role_type" value="{{role.title}}" />
+
+                <div class="col-md-4 col-xs-12">
+                    <div class="img{{role.id}} researcher_img">&nbsp;</div>
+                </div>
+
+                <div class="col-md-8 col-xs-12 role_info">
+                    <h4>{{role.title}}</h4>
+                    <div class="role_desc">
+                        {{role.description|raw}}
+                    </div>
+                </div>
+
+            </label>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container video" aria-label="Video">
+    <iframe width="100%" height="596" src="https://www.youtube.com/embed/dRynd3D2dOc?si=GdI-golzgC3efEo4"
+            title="Transformative Change for a Just and Sustainable World: An Introduction to the IPBES Assessment"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</section>

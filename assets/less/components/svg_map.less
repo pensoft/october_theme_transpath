@@ -27,3 +27,51 @@
 .tooltiptext.active {
   display: initial;
 }
+
+
+.blink{
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.tooltip_tree{
+    display: none;
+    color: #000000;
+    position: fixed;
+    z-index: 1;
+    padding: 19px 15px;
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 0 0 10px 0 rgba(0, 72, 103, 0.13);
+    width: 209px;
+    text-align: left;
+
+    p{
+        color: #8D8D8D;
+        font-size: 15px!important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.3em!important;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    h4{
+        color: #070C10;
+        font-size: 18px!important;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.3em!important;
+        text-transform: unset;
+        margin-bottom: 10px;
+    }
+}
+
+.tooltip_tree.active {
+    display: initial;
+}

@@ -232,6 +232,76 @@ p:has(.edit-link){
             });
         }
     }
+
+    &.toolkit {
+        .header-image-bar {
+            height: 100vh;
+            position: relative;
+            background-image: url("../../assets/images/background-hero.png") !important;
+            background-position: top left !important;
+            background-size: cover;
+            //.breakpoint-large-down({
+            //    height: 100vh;
+            //    margin-top: 0;
+            //});
+        }
+        h1 {
+            &.underline {
+                border-bottom: none;
+                //.breakpoint-small-down({
+                //    font-size: 55px;
+                //    white-space: nowrap;
+                //    padding: 0;
+                //});
+            }
+        }
+
+        .intro{
+            //max-width: 60%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+
+            h1{
+                color: #003B54;
+                font-family: Metropolis;
+                font-size: 60px!important;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                text-align: left;
+                text-transform: unset;
+            }
+
+            .label{
+                color: rgba(46, 142, 100, 0.49);
+                font-family: Metropolis;
+                font-size: 26px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                text-align: left;
+            }
+
+            .breakpoint-laptop-down({
+                padding-left: 50px;
+            });
+
+            .breakpoint-small-down({
+                max-width: 100%;
+                padding-left: 20px;
+            });
+        }
+
+        svg{
+            height: 76vh;
+        }
+
+        .tree_container{
+            position: relative;
+        }
+    }
 }
 
 
@@ -250,6 +320,16 @@ p:has(.edit-link){
 .home{
     #layout-content {
         padding-bottom: 345px;
+        background: none;
+        background-size: 100%;
+        padding-top: 20px;
+    }
+
+}
+
+.toolkit{
+    #layout-content {
+        padding-bottom: 325px;
         background: none;
         background-size: 100%;
         padding-top: 20px;
