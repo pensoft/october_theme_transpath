@@ -821,6 +821,26 @@ function onCustomSinglePartner(pId) {
     });
 }
 
+
+function handleStepsModal(){
+    const selected = document.querySelector('input[name="role_type"]:checked');
+    if (!selected) {
+        alert('Please select an option');
+        return;
+    }
+
+    const value = selected.value;
+    document.getElementById('selectedType').textContent = value.charAt(0).toUpperCase() + value.slice(1);
+
+    oc.request(this, 'onLoadPartial', {
+        data: { type: value },
+        update: { 'modal-content': '#modalContent' },
+        success: function() {
+            new bootstrap.Modal(document.getElementById('userModal')).show();
+        }
+    });
+}
+
 function init() {
     window.addEventListener('resize', function () {
         if (isBreakpointLarge()) {

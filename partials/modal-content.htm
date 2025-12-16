@@ -1,0 +1,7 @@
+modal content {{type}}
+
+{% if type == 'researcher' %}
+    {% partial 'researcher_steps' %}
+{% else %}
+    {% partial 'practitioner_steps' %}
+{% endif %}

@@ -34,7 +34,11 @@ update_selector = "#gdpr-reload"
 <!--    <script src="{{ 'assets/js/tippy-bundle.umd.min.js'|theme}}"></script>-->
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/jquery-ui.js'|theme }}"></script>
-    <script src="{{ 'assets/vendor/bootstrap/js/modal.js'|theme  }}"></script>
+<!--    <script src="{{ 'assets/vendor/bootstrap/js/modal.js'|theme  }}"></script>-->
+    {% if this.page.id == 'toolkit' %}
+    <script src="{{ 'assets/js/bootstrap.min.js'|theme }}"></script>
+    <script src="{{ 'assets/js/toolkit-steps.js'|theme }}"></script>
+    {% endif %}
     <script type="text/javascript" src="{{ 'assets/js/slick.min.js'|theme }}"></script>
     <link rel="stylesheet" href="{{ 'assets/css/aos.css'|theme }}">
     <script src="{{ 'assets/js/aos.js'|theme }}"></script>

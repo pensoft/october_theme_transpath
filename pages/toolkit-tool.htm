@@ -1,0 +1,255 @@
+url = "/toolkit/tool/:role/:stage/:challenge"
+layout = "default"
+title = "Tool Details"
+
+==
+<?php
+function onStart()
+{
+    $role = $this->param('role');
+$stage = $this->param('stage');
+$challenge = $this->param('challenge');
+
+// Researcher tools
+$researcherTools = [
+'just-starting' => [
+'assessing-positionality' => [
+'title' => 'Positionality Assessment Framework',
+'description' => 'A comprehensive tool to help researchers understand and articulate their positionality in relation to their research subjects and context.',
+'features' => ['Self-reflection questionnaire', 'Bias identification checklist', 'Documentation templates'],
+'type' => 'researcher'
+],
+'defining-research-approach' => [
+'title' => 'Research Approach Navigator',
+'description' => 'Interactive guide for selecting and defining appropriate research methodologies based on your project goals.',
+'features' => ['Methodology comparison matrix', 'Decision tree guide', 'Best practices library'],
+'type' => 'researcher'
+],
+'communication-jargon' => [
+'title' => 'Plain Language Translator',
+'description' => 'Tools and guidelines for translating academic jargon into accessible language for diverse audiences.',
+'features' => ['Jargon glossary', 'Plain language templates', 'Audience analysis tool'],
+'type' => 'researcher'
+]
+],
+'midway' => [
+'involvement-with-community' => [
+'title' => 'Community Engagement Toolkit',
+'description' => 'Strategies and tools for meaningful community involvement throughout your research process.',
+'features' => ['Engagement planning templates', 'Feedback collection tools', 'Community mapping guide'],
+'type' => 'researcher'
+],
+'ensuring-participation' => [
+'title' => 'Participatory Methods Guide',
+'description' => 'Comprehensive guide to ensuring inclusive and equitable participation in research activities.',
+'features' => ['Participation frameworks', 'Accessibility checklist', 'Inclusive facilitation tips'],
+'type' => 'researcher'
+],
+'stakeholder-identification-fatigue' => [
+'title' => 'Stakeholder Management System',
+'description' => 'Tools for identifying, prioritizing, and managing stakeholder relationships while preventing fatigue.',
+'features' => ['Stakeholder mapping tool', 'Engagement tracking', 'Fatigue prevention strategies'],
+'type' => 'researcher'
+],
+'building-trust-collaboration' => [
+'title' => 'Trust Building Framework',
+'description' => 'Evidence-based approaches for establishing and maintaining trust in collaborative research.',
+'features' => ['Trust assessment tool', 'Collaboration agreements', 'Conflict resolution guide'],
+'type' => 'researcher'
+]
+],
+'finalizing' => [
+'community-centered-reporting' => [
+'title' => 'Community Reporting Templates',
+'description' => 'Templates and guidelines for creating research outputs that center community perspectives and needs.',
+'features' => ['Report templates', 'Visual communication tools', 'Feedback integration guide'],
+'type' => 'researcher'
+],
+'achieving-shared-understanding' => [
+'title' => 'Knowledge Co-Creation Toolkit',
+'description' => 'Methods for achieving shared understanding and co-creating knowledge with research partners.',
+'features' => ['Co-creation workshops', 'Validation processes', 'Shared language development'],
+'type' => 'researcher'
+],
+'ensuring-transformative-impact' => [
+'title' => 'Impact Assessment Framework',
+'description' => 'Tools for measuring, documenting, and maximizing the transformative impact of your research.',
+'features' => ['Impact indicators', 'Change theory templates', 'Sustainability planning'],
+'type' => 'researcher'
+]
+]
+];
+
+// Practitioner tools - Local (Enablers)
+$practitionerToolsLocal = [
+'human-nature-connection' => [
+'title' => 'Human-Nature Connection Toolkit',
+'description' => 'Tools for fostering reciprocal human-nature relationships in local communities.',
+'features' => ['Community engagement guides', 'Nature-based solutions framework', 'Impact assessment tools'],
+'type' => 'enabler'
+],
+'front-runners-enthusiasm' => [
+'title' => 'Front Runners Engagement Kit',
+'description' => 'Harness the enthusiasm and determination of change pioneers.',
+'features' => ['Leadership identification tools', 'Motivation frameworks', 'Network building guides'],
+'type' => 'enabler'
+],
+'public-support' => [
+'title' => 'Public Support Building Toolkit',
+'description' => 'Strategies for building and maintaining public support for transformation.',
+'features' => ['Communication templates', 'Stakeholder mapping', 'Campaign planning tools'],
+'type' => 'enabler'
+],
+'increase-funding' => [
+'title' => 'Funding Acquisition Guide',
+'description' => 'Resources for increasing funding for transformative initiatives.',
+'features' => ['Grant writing templates', 'Funding source database', 'Proposal frameworks'],
+'type' => 'enabler'
+],
+'value-driven-finance' => [
+'title' => 'Value-Driven Finance Framework',
+'description' => 'Align financial systems with sustainability values.',
+'features' => ['Impact investment guides', 'ESG integration tools', 'Value assessment frameworks'],
+'type' => 'enabler'
+],
+'diversity-of-voices' => [
+'title' => 'Inclusive Voices Toolkit',
+'description' => 'Recognize and incorporate diverse perspectives in decision-making.',
+'features' => ['Stakeholder inclusion guides', 'Facilitation tools', 'Representation frameworks'],
+'type' => 'enabler'
+],
+'transformative-governance' => [
+'title' => 'Transformative Governance Guide',
+'description' => 'Implement adaptive and responsive governance frameworks.',
+'features' => ['Governance assessment tools', 'Policy integration guides', 'Monitoring frameworks'],
+'type' => 'enabler'
+]
+];
+
+// Practitioner tools - National (Constraints)
+$practitionerToolsNational = [
+'weak-human-nature-connection' => [
+'title' => 'Reconnecting Human-Nature Toolkit',
+'description' => 'Strategies to address and overcome disconnection between people and nature at national scale.',
+'features' => ['National awareness campaigns', 'Education program frameworks', 'Policy recommendations'],
+'type' => 'constraint'
+],
+'actors-conformity' => [
+'title' => 'Breaking Conformity Guide',
+'description' => 'Tools to overcome resistance to change and status quo bias in institutions.',
+'features' => ['Change management frameworks', 'Stakeholder engagement strategies', 'Innovation incentive models'],
+'type' => 'constraint'
+],
+'declined-public-support' => [
+'title' => 'Public Trust Rebuilding Kit',
+'description' => 'Strategies for rebuilding trust and engagement with the public.',
+'features' => ['Trust assessment tools', 'Communication strategies', 'Transparency frameworks'],
+'type' => 'constraint'
+],
+'lack-of-tools' => [
+'title' => 'Compliance Tools Development Guide',
+'description' => 'Framework for developing practical tools for policy implementation.',
+'features' => ['Tool development templates', 'Implementation guides', 'Monitoring systems'],
+'type' => 'constraint'
+],
+'short-term-thinking' => [
+'title' => 'Long-Term Vision Framework',
+'description' => 'Shift focus from immediate gains to long-term sustainability.',
+'features' => ['Future scenario planning', 'Intergenerational equity tools', 'Long-term impact assessment'],
+'type' => 'constraint'
+],
+'power-imbalance' => [
+'title' => 'Power Balance Toolkit',
+'description' => 'Address unequal distribution of power in decision-making processes.',
+'features' => ['Power mapping tools', 'Inclusive governance models', 'Equity assessment frameworks'],
+'type' => 'constraint'
+],
+'bureaucracy' => [
+'title' => 'Bureaucracy Reduction Guide',
+'description' => 'Streamline processes and reduce administrative barriers.',
+'features' => ['Process simplification tools', 'Digital transformation guides', 'Efficiency assessment frameworks'],
+'type' => 'constraint'
+]
+];
+
+$this['role'] = $role;
+$this['stage'] = $stage;
+$this['challenge'] = $challenge;
+$this['tool'] = null;
+
+if ($role === 'researcher') {
+$this['tool'] = $researcherTools[$stage][$challenge] ?? null;
+} elseif ($role === 'practitioner') {
+if ($stage === 'local') {
+$this['tool'] = $practitionerToolsLocal[$challenge] ?? null;
+} else {
+$this['tool'] = $practitionerToolsNational[$challenge] ?? null;
+}
+}
+
+if (!$this['tool']) {
+return \Redirect::to('/toolkit');
+}
+}
+?>
+==
+<section class="container tool-detail">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/toolkit">Toolkit</a></li>
+            <li class="breadcrumb-item">{{ role|title }}</li>
+            <li class="breadcrumb-item">{{ stage|replace({'-': ' '})|title }}</li>
+            <li class="breadcrumb-item active">{{ challenge|replace({'-': ' '})|title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="tool-header">
+                {% if tool.type == 'enabler' %}
+                <span class="badge badge-enabler mb-3">Enabler</span>
+                {% elseif tool.type == 'constraint' %}
+                <span class="badge badge-constraint mb-3">Constraint</span>
+                {% else %}
+                <span class="badge badge-primary mb-3">{{ role|title }} - {{ stage|replace({'-': ' '})|title }}</span>
+                {% endif %}
+
+                <h1>{{ tool.title }}</h1>
+                <p class="lead">{{ tool.description }}</p>
+            </div>
+
+            <div class="tool-features mt-5">
+                <h3>What's Included</h3>
+                <ul class="feature-list">
+                    {% for feature in tool.features %}
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        {{ feature }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="tool-card">
+                <h4>Get This Tool</h4>
+                <p>Download the complete toolkit and start implementing these strategies.</p>
+                <a href="#" class="btn btn-primary btn-lg btn-block">
+                    Download Tool
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                </a>
+                <a href="/toolkit" class="btn btn-outline-secondary btn-block mt-3">
+                    Back to Toolkit
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

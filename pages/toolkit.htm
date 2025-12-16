@@ -17,6 +17,7 @@ title = 1
 background = "transperant"
 templates = "template3"
 description_limit = 0
+
 ==
 <?php
 use Pensoft\Toolkit\Models\Role;
@@ -24,6 +25,41 @@ use Pensoft\Toolkit\Models\Role;
 function onStart()
 {
     $this['roles'] = Role::get();
+}
+
+function onOpenModal()
+{
+    $roleType = post('role_type');
+    $partial = post('partial');
+
+    if (empty($roleType)) {
+        throw new \ValidationException(['role' => 'Please select a role']);
+}
+
+return [
+'#modalContent' => $this->renderPartial($partial, [
+'roleType' => $roleType
+])
+];
+}
+
+function onLoadStep()
+{
+$step = post('step');
+$roleType = post('role_type');
+$step1Value = post('step1_value');
+$step2Value = post('step2_value');
+$sliderValue = post('slider_value');
+$partial = post('partial');
+
+    return [
+        '#modalContent' => $this->renderPartial($partial, [
+            'roleType' => $roleType,
+            'step1Value' => $step1Value,
+            'step2Value' => $step2Value,
+            'sliderValue' => $sliderValue
+        ])
+    ];
 }
 ?>
 ==
@@ -41,32 +77,61 @@ function onStart()
     </div>
     <div class="role_options">
         {% for role in roles %}
-        <div >
-            <label for="{{role.title}}" class="row role_option">
-
-                <input type="radio" id="{{role.title}}" name="role_type" value="{{role.title}}" />
-
+        <div>
+            <label for="{{role.title|slug}}" class="row role_option">
+                <input type="radio" id="{{role.title|slug}}" name="role_type" value="{{role.title|slug}}" />
                 <div class="col-md-4 col-xs-12">
                     <div class="img{{role.id}} researcher_img">&nbsp;</div>
                 </div>
-
                 <div class="col-md-8 col-xs-12 role_info">
                     <h4>{{role.title}}</h4>
                     <div class="role_desc">
                         {{role.description|raw}}
                     </div>
                 </div>
-
             </label>
-
         </div>
         {% endfor %}
+    </div>
+
+    <div class="btn_container">
+        <button type="button" class="btn btn-primary" id="exploreBtn">Explore</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ExploreToolkit" tabindex="-1" role="dialog" aria-labelledby="modal-title-ExploreToolkit" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-content">
+                        <div class="step-indicator">
+                            <span class="step-dot active" data-step="1">1</span>
+                            <span class="step-line"></span>
+                            <span class="step-dot" data-step="2">2</span>
+                            <span class="step-line"></span>
+                            <span class="step-dot" data-step="3">3</span>
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                <path d="M1 20.22L20.0269 1.19299" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 1L20.0269 20.027" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- Content loaded here -->
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="container video" aria-label="Video">
     <iframe width="100%" height="596" src="https://www.youtube.com/embed/dRynd3D2dOc?si=GdI-golzgC3efEo4"
-            title="Transformative Change for a Just and Sustainable World: An Introduction to the IPBES Assessment"
+            title="Transformative Change for a Just and Sustainable World"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

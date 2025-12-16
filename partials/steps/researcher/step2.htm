@@ -1,0 +1,79 @@
+<div class="step-content">
+    <!-- Reflexivity Fact -->
+    <div class="reflexivity-fact">
+        <div class="label">Reflexivity Fact</div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+
+    <div class="row middle-xs">
+        <div class="col-md-10 col-xs-12 start-md center-xs">
+            <h4 class="step-question">Which challenge are you facing?</h4>
+        </div>
+        <div class="col-md-2 col-xs-12 end-md center-x">
+            <div class="step-label">Step 2 / 3</div>
+        </div>
+    </div>
+
+
+
+    <div class="step-options researcher step2 {{step1Value}}">
+        {% if step1Value == 'just-starting' %}
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="assessing-positionality">
+            <span class="form-check-label">Assessing positionality</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="defining-research-approach">
+            <span class="form-check-label">Defining research approach</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="communication-jargon">
+            <span class="form-check-label">Communication jargon</span>
+        </label>
+
+        {% elseif step1Value == 'midway' %}
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="involvement-with-community">
+            <span class="form-check-label">Involvement with the community</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="ensuring-participation">
+            <span class="form-check-label">Ensuring participation</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="stakeholder-identification-fatigue">
+            <span class="form-check-label">Stakeholder identification and fatigue</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="building-trust-collaboration">
+            <span class="form-check-label">Building trust and collaboration</span>
+        </label>
+
+        {% elseif step1Value == 'finalizing' %}
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="community-centered-reporting">
+            <span class="form-check-label">Community centered reporting</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="achieving-shared-understanding">
+            <span class="form-check-label">Achieving shared understanding</span>
+        </label>
+
+        <label class="form-check">
+            <input class="form-check-input" type="radio" name="step2" value="ensuring-transformative-impact">
+            <span class="form-check-label">Ensuring transformative impact</span>
+        </label>
+        {% endif %}
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn-back" id="btnBack">Back</button>
+        <button type="button" class="btn btn-primary" id="btnNext">Continue</button>
+    </div>
+</div>
