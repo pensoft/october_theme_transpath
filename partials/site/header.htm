@@ -117,7 +117,28 @@ numberOfLevels = 2
 </div>
 {% endif %}
 
-{% if page_id != 'home' and page_id != 'toolkit' %}
+{% if page_id == 'toolkit-tool' %}
+<div class="header-image {{page_id}}">
+    <div class="header-image-bar" role="img" aria-label="Header background">
+        <div class="container">
+            <div class="row middle-xs">
+                <div class="col-md-8 col-xs-12">
+                    <div class="label">ToolKit</div>
+                    <h1>{{tool_title}}</h1>
+                </div>
+                <div class="col-md-4 col-xs-12 tree_container">
+                    <div class="tree_part">
+                        <img src="{{'assets/images/transforming_values.svg'|theme}}">
+                        Transforming<br>values
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if page_id != 'home' and page_id != 'toolkit' and page_id != 'toolkit-tool' %}
 <!--<div class="header-image-wave"></div>-->
 <div class="container header-container">
     <h1 class="page-title">{{this.page.title}}</h1>

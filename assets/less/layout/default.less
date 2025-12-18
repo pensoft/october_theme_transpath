@@ -26,6 +26,34 @@
     }
 }
 
+.container700 {
+    max-width: 100%;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+     //padding-top: @padding-base-space-home * 2.5;
+    padding-top: 50px;
+    //padding-bottom: @padding-base-space-home * 2.5;
+    padding-bottom: 50px;
+    margin-right: auto;
+    margin-left: auto;
+
+    .breakpoint-small({
+        max-width: 540px;
+    });
+    .breakpoint-medium({
+        max-width: 620px;
+    });
+    .breakpoint-large({
+        max-width: 660px;
+    });
+    .breakpoint-huge({
+        max-width: 680px;
+    });
+    &.highlights-news{
+        padding-bottom: 75px;
+    }
+}
+
 .container-fluid {
     width: 100%;
     padding-left: 0!important;
