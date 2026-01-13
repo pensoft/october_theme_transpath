@@ -20,12 +20,6 @@ description_limit = 0
 
 ==
 <?php
-use Pensoft\Toolkit\Models\Role;
-
-function onStart()
-{
-    $this['roles'] = Role::get();
-}
 
 function onOpenModal()
 {
@@ -76,22 +70,35 @@ $partial = post('partial');
         {% component 'role' %}
     </div>
     <div class="role_options">
-        {% for role in roles %}
         <div>
-            <label for="{{role.title|slug}}" class="row role_option">
-                <input type="radio" id="{{role.title|slug}}" name="role_type" value="{{role.title|slug}}" />
+            <label for="researcher" class="row role_option">
+                <input type="radio" id="researcher" name="role_type" value="researcher" />
                 <div class="col-md-4 col-xs-12">
-                    <div class="img{{role.id}} researcher_img">&nbsp;</div>
+                    <div class="img1 researcher_img">&nbsp;</div>
                 </div>
                 <div class="col-md-8 col-xs-12 role_info">
-                    <h4>{{role.title}}</h4>
+                    <h4>Researcher</h4>
                     <div class="role_desc">
-                        {{role.description|raw}}
+                        <p>Whether you're a desktop-based researcher or an action-oriented practitioner, we've developed tools and frameworks just for you.</p>
                     </div>
                 </div>
             </label>
         </div>
-        {% endfor %}
+
+        <div>
+            <label for="practitioner" class="row role_option">
+                <input type="radio" id="practitioner" name="role_type" value="practitioner" />
+                <div class="col-md-4 col-xs-12">
+                    <div class="img2 researcher_img">&nbsp;</div>
+                </div>
+                <div class="col-md-8 col-xs-12 role_info">
+                    <h4>Practitioner</h4>
+                    <div class="role_desc">
+                        <p>Whether you are a ministry officer or a community leader, we offer thought-provoking reflection questions and practical tools to support your leadership in driving transformative change.</p>
+                    </div>
+                </div>
+            </label>
+        </div>
     </div>
 
     <div class="btn_container">
