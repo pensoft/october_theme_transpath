@@ -3,7 +3,8 @@ var stepData = {
     step1Value: '',
     step2Value: '',
     currentStep: 1,
-    sliderValue: 0
+    sliderValue: 0,
+    infoStepShown: false  // Track if info step has been shown
 };
 
 function initToolkitModal() {
@@ -21,6 +22,7 @@ function initToolkitModal() {
         stepData.step1Value = '';
         stepData.step2Value = '';
         stepData.sliderValue = 0;
+        stepData.infoStepShown = false;
 
         var partialPath = '';
         if (stepData.roleType === 'researcher') {
@@ -54,81 +56,81 @@ function initToolkitModal() {
     // Next step
     $(document).on('click', '#btnNext', function() {
         var currentStep = stepData.currentStep;
+        var roleType = stepData.roleType;
+        var basePath = 'steps/' + roleType + '/';
 
-        // Validation based on role and step
-        if (stepData.roleType === 'researcher') {
-            var selected = document.querySelector('input[name="step' + currentStep + '"]:checked');
-            if (!selected) {
-                alert('Please select an option');
-                return;
-            }
-            stepData['step' + currentStep + 'Value'] = selected.value;
-        } else if (stepData.roleType === 'practitioner') {
-            if (currentStep === 1) {
-                var slider = document.getElementById('scaleSlider');
-                stepData.sliderValue = parseInt(slider.value);
-                stepData.step1Value = stepData.sliderValue <= 50 ? 'local' : 'national';
+        if (roleType === 'researcher') {
+            if (currentStep === 1 && !stepData.infoStepShown) {
+                // Step 1: Save selection, then show info step (step1b)
+                var selected = document.querySelector('input[name="step1"]:checked');
+                if (!selected) {
+                    alert('Please select an option');
+                    return;
+                }
+                stepData.step1Value = selected.value;
+                stepData.infoStepShown = true;
+
+                // Load info step but DON'T update step indicator
+                loadStep(basePath + 'step1b', null);
+
+            } else if (stepData.infoStepShown && currentStep === 1) {
+                // Coming from info step, go to step 2
+                stepData.currentStep = 2;
+                loadStep(basePath + 'step2', 2);
+
             } else if (currentStep === 2) {
+                // Step 2: Selection
                 var selected = document.querySelector('input[name="step2"]:checked');
                 if (!selected) {
                     alert('Please select an option');
                     return;
                 }
                 stepData.step2Value = selected.value;
+                stepData.currentStep = 3;
+                loadStep(basePath + 'step3', 3);
+            }
+
+        } else if (roleType === 'practitioner') {
+            if (currentStep === 1 && !stepData.infoStepShown) {
+                // Step 1: Save slider value, then show info step (step1b)
+                var slider = document.getElementById('scaleSlider');
+                stepData.sliderValue = parseInt(slider.value);
+                stepData.step1Value = stepData.sliderValue <= 50 ? 'local' : 'national';
+                stepData.infoStepShown = true;
+
+                // Load info step but DON'T update step indicator
+                loadStep(basePath + 'step1b', null);
+
+            } else if (stepData.infoStepShown && currentStep === 1) {
+                // Coming from info step, go to step 2
+                stepData.currentStep = 2;
+                loadStep(basePath + 'step2', 2);
+
+            } else if (currentStep === 2) {
+                // Step 2: Enablers/Constraints selection
+                var selected = document.querySelector('input[name="step2"]:checked');
+                if (!selected) {
+                    alert('Please select an option');
+                    return;
+                }
+                stepData.step2Value = selected.value;
+                stepData.currentStep = 3;
+                loadStep(basePath + 'step3', 3);
             }
         }
-
-        stepData.currentStep++;
-
-        var partialPath = '';
-        if (stepData.roleType === 'researcher') {
-            partialPath = 'steps/researcher/step' + stepData.currentStep;
-        } else {
-            partialPath = 'steps/practitioner/step' + stepData.currentStep;
-        }
-
-        $.request('onLoadStep', {
-            data: {
-                step: stepData.currentStep,
-                role_type: stepData.roleType,
-                step1_value: stepData.step1Value,
-                step2_value: stepData.step2Value,
-                slider_value: stepData.sliderValue,
-                partial: partialPath
-            },
-            success: function(data) {
-                $('#modalContent').html(data['#modalContent']);
-                updateStepIndicator(stepData.currentStep);
-            }
-        });
     });
 
     // Back step
     $(document).on('click', '#btnBack', function() {
-        stepData.currentStep--;
+        var roleType = stepData.roleType;
+        var basePath = 'steps/' + roleType + '/';
 
-        var partialPath = '';
-        if (stepData.roleType === 'researcher') {
-            partialPath = 'steps/researcher/step' + stepData.currentStep;
-        } else {
-            partialPath = 'steps/practitioner/step' + stepData.currentStep;
-        }
-
-        $.request('onLoadStep', {
-            data: {
-                step: stepData.currentStep,
-                role_type: stepData.roleType,
-                step1_value: stepData.step1Value,
-                step2_value: stepData.step2Value,
-                slider_value: stepData.sliderValue,
-                partial: partialPath
-            },
-            success: function(data) {
-                $('#modalContent').html(data['#modalContent']);
-                updateStepIndicator(stepData.currentStep);
-
-                // Re-initialize slider if going back to step 1 for practitioner
-                if (stepData.roleType === 'practitioner' && stepData.currentStep === 1) {
+        if (stepData.infoStepShown && stepData.currentStep === 1) {
+            // On info step, go back to step 1
+            stepData.infoStepShown = false;
+            loadStep(basePath + 'step1', 1, function() {
+                // Re-initialize slider if practitioner
+                if (roleType === 'practitioner') {
                     setTimeout(function() {
                         initSlider();
                         var slider = document.getElementById('scaleSlider');
@@ -139,8 +141,19 @@ function initToolkitModal() {
                         }
                     }, 100);
                 }
-            }
-        });
+            });
+
+        } else if (stepData.currentStep === 2) {
+            // On step 2, go back to info step
+            stepData.currentStep = 1;
+            stepData.infoStepShown = true;
+            loadStep(basePath + 'step1b', null);
+
+        } else if (stepData.currentStep === 3) {
+            // On step 3, go back to step 2
+            stepData.currentStep = 2;
+            loadStep(basePath + 'step2', 2);
+        }
     });
 
     // View Tool (Final step)
@@ -154,6 +167,31 @@ function initToolkitModal() {
     $(document).on('change', '.expandable-options input[type="radio"]', function() {
         $('.option-details').slideUp(200);
         $(this).closest('.form-check').find('.option-details').slideDown(200);
+    });
+}
+
+function loadStep(partialPath, indicatorStep, callback) {
+    $.request('onLoadStep', {
+        data: {
+            step: stepData.currentStep,
+            role_type: stepData.roleType,
+            step1_value: stepData.step1Value,
+            step2_value: stepData.step2Value,
+            slider_value: stepData.sliderValue,
+            partial: partialPath
+        },
+        success: function(data) {
+            $('#modalContent').html(data['#modalContent']);
+
+            // Only update indicator if indicatorStep is provided
+            if (indicatorStep !== null) {
+                updateStepIndicator(indicatorStep);
+            }
+
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
     });
 }
 
