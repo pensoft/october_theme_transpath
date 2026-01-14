@@ -10,40 +10,40 @@ use Pensoft\Toolset\Models\Stage;
 function onStart()
 {
     $role = $this->param('role');
-    $stage = $this->param('stage');
-    $challenge = $this->param('challenge');
+$stage = $this->param('stage');
+$challenge = $this->param('challenge');
 
-    $this['role'] = $role;
-    $this['stage'] = $stage;
-    $this['challenge'] = $challenge;
-    $this['tool'] = null;
+$this['role'] = $role;
+$this['stage'] = $stage;
+$this['challenge'] = $challenge;
+$this['tool'] = null;
 
-    // Validate role
-    if (!in_array($role, ['researcher', 'practitioner'])) {
-        return \Redirect::to('/toolkit');
-    }
+// Validate role
+if (!in_array($role, ['researcher', 'practitioner'])) {
+return \Redirect::to('/toolkit');
+}
 
 // Find the tool
 $tool = Tool::active()
-    ->byRole($role)
-    ->bySlug($challenge)
-    ->whereHas('stage', function($q) use ($stage) {
-        $q->where('name', $stage);
-    })
-    ->with('stage')
-    ->first();
+->byRole($role)
+->bySlug($challenge)
+->whereHas('stage', function($q) use ($stage) {
+$q->where('name', $stage);
+})
+->with('stage')
+->first();
 
-    if (!$tool) {
-        return \Redirect::to('/toolkit');
-    }
+if (!$tool) {
+return \Redirect::to('/toolkit');
+}
 
-    // Pass tool data to the page
-    $this['tool'] = $tool;
-    $this['tool_title'] = $tool->title;
+// Pass tool data to the page
+$this['tool'] = $tool;
+$this['tool_title'] = $tool->title;
 
-    // Helper arrays for easy access in templates
-    $this['features_list'] = $tool->features_list;
-    $this['stakeholders_list'] = $tool->stakeholders_list;
+// Helper arrays for easy access in templates
+$this['features_list'] = $tool->features_list;
+$this['stakeholders_list'] = $tool->stakeholders_list;
 }
 ?>
 ==
@@ -89,7 +89,7 @@ $tool = Tool::active()
             <h3>With whom and for whom is are you transforming?</h3>
         </div>
         {% for stakeholder in tool.transform_with %}
-<!--        <div class="col-md-6 col-xs-12 {% if loop.index is odd %}end-md{% else %}start-md{% endif %} center-xs">-->
+        <!--        <div class="col-md-6 col-xs-12 {% if loop.index is odd %}end-md{% else %}start-md{% endif %} center-xs">-->
         <div class="col-md-6 col-xs-12 {{ stakeholder.name|slug }}">
             <div class="question2_container">
                 {{ stakeholder.name }}
@@ -131,31 +131,17 @@ $tool = Tool::active()
             <div class="row">
                 <div class="col-xs-12">
                     <h3 class="action-steps-title">Actionable steps</h3>
-<!--                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>-->
+                    <!--                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>-->
                 </div>
             </div>
 
             <div class="action-steps-timeline">
-                <div class="timeline-path">
-                    <svg viewBox="0 0 600 {{ (tool.action_steps|length) * 220 }}" preserveAspectRatio="none">
-                        <path class="timeline-curve" d="
-                        {% for step in tool.action_steps %}
-                            {% set yPos = loop.index0 * 220 + 60 %}
-                            {% set prevY = (loop.index0 - 1) * 220 + 60 %}
-                                {% if loop.index is odd %}
-                                    Q 220 {{ (prevY + yPos) / 2 }}, 380 {{ yPos }}
-                                {% else %}
-                                    Q 380 {{ (prevY + yPos) / 2 }}, 220 {{ yPos }}
-                                {% endif %}
-                        {% endfor %}
-                        {% set lastY = (tool.action_steps|length - 1) * 220 + 60 %}
-                        Q {% if tool.action_steps|length is odd %}380{% else %}220{% endif %} {{ lastY + 80 }}, 300 {{ lastY + 160 }}
-                    " fill="none"/>
-                    </svg>
-                </div>
+                <div class="timeline-path"></div>
+
+                {% set totalSteps = tool.action_steps|length %}
 
                 {% for step in tool.action_steps %}
-                <div class="step-item step-item-{{loop.index}} {% if loop.index is odd %}step-right{% else %}step-left{% endif %}">
+                <div class="step-item step-item-{{loop.index}} {% if loop.index is odd %}step-right{% else %}step-left{% endif %}" data-step="{{ loop.index }}">
                     <div class="step-circle-wrapper">
                         <div class="step-circle">
                             <div class="step-circle-inner">
@@ -167,7 +153,7 @@ $tool = Tool::active()
                         <span class="step-label">STEP {{ step.step_number ?: loop.index }}</span>
                         <span class="step-text">{{ step.step_title }}</span>
                         {% if step.step_content %}
-                        <a href="#step-{{ loop.index }}" class="step-readmore">Read more</a>
+                        <a href="javascript:void(0);" class="step-readmore" data-target="#step-modal-{{ loop.index }}">Read more</a>
                         {% endif %}
                     </div>
                 </div>
@@ -175,6 +161,34 @@ $tool = Tool::active()
             </div>
         </div>
     </section>
+
+    <!-- Modals outside the timeline loop -->
+    {% for step in tool.action_steps %}
+    <div class="modal fade step-modal" id="step-modal-{{ loop.index }}"
+         tabindex="-1" role="dialog" aria-labelledby="modal-title-step-{{ loop.index }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title-step-{{ loop.index }}">Step {{ step.step_number ?: loop.index }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                <path d="M1 20.22L20.0269 1.19299" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 1L20.0269 20.027" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="step-modal-title">{{ step.step_title }}</h4>
+                    <div class="step-modal-content">
+                        {{ step.step_content|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
     {% endif %}
 
 

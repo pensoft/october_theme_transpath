@@ -169,8 +169,6 @@ $(document).ready(function() {
 
 	var count = $("h1").text().length;
 
-    console.log($(location.hash));
-
 	$('.tabs:not(#mylibraryForm)').each(function(){
 		// For each set of tabs, we want to keep track of
 		// which tab is active and its associated content

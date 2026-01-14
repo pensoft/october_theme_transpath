@@ -35,7 +35,7 @@ update_selector = "#gdpr-reload"
     <script src="{{ 'assets/js/app.js'|theme }}"></script>
     <script src="{{ 'assets/js/jquery-ui.js'|theme }}"></script>
 <!--    <script src="{{ 'assets/vendor/bootstrap/js/modal.js'|theme  }}"></script>-->
-    {% if this.page.id == 'toolkit' %}
+    {% if this.page.id == 'toolkit' or this.page.id == 'toolkit-tool' %}
     <script src="{{ 'assets/js/bootstrap.min.js'|theme }}"></script>
     <script src="{{ 'assets/js/toolkit-steps.js'|theme }}"></script>
     {% endif %}

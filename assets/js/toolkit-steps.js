@@ -168,6 +168,63 @@ function initToolkitModal() {
         $('.option-details').slideUp(200);
         $(this).closest('.form-check').find('.option-details').slideDown(200);
     });
+
+    //---------
+    // TOOL detailed page action steps
+    //---------
+
+    // Make step items show pointer cursor
+    $('.step-item').css('cursor', 'pointer');
+
+    // Open modal when clicking on step-item (but not on the read more link)
+    $(document).on('click', '.step-item', function(e) {
+        // Don't trigger if clicking on the read more link (it has its own handler)
+        if ($(e.target).hasClass('step-readmore')) {
+            return;
+        }
+
+        var stepIndex = $(this).data('step');
+        if (stepIndex) {
+            $('#step-' + stepIndex).modal('show');
+        }
+    });
+
+    // Open modal when clicking read more link
+    $(document).on('click', '.step-readmore', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var targetModal = $(this).data('target');
+        if (targetModal) {
+            $(targetModal).modal('show');
+        }
+    });
+
+    // Navigate to previous step modal
+    $(document).on('click', '.btn-prev-step', function() {
+        var prevStep = $(this).data('step');
+        var currentModal = $(this).closest('.modal');
+
+        currentModal.modal('hide');
+
+        // Wait for current modal to close before opening next
+        currentModal.one('hidden.bs.modal', function() {
+            $('#step-' + prevStep).modal('show');
+        });
+    });
+
+    // Navigate to next step modal
+    $(document).on('click', '.btn-next-step', function() {
+        var nextStep = $(this).data('step');
+        var currentModal = $(this).closest('.modal');
+
+        currentModal.modal('hide');
+
+        // Wait for current modal to close before opening next
+        currentModal.one('hidden.bs.modal', function() {
+            $('#step-' + nextStep).modal('show');
+        });
+    });
 }
 
 function loadStep(partialPath, indicatorStep, callback) {

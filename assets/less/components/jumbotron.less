@@ -1067,82 +1067,182 @@
 }
 
 .toolkit-tool{
-    /* Tool Detail Page */
-    //.tool-detail {
-    //    padding: 40px 0 80px;
-    //}
-    //
-    //.tool-header h1 {
-    //    font-size: 2.5rem;
-    //    font-weight: 700;
-    //    color: #333;
-    //    margin-bottom: 20px;
-    //}
-    //
-    //.tool-header .lead {
-    //    font-size: 1.2rem;
-    //    color: #666;
-    //}
-    //
-    //.badge-primary {
-    //    background: #0882b7;
-    //    padding: 8px 16px;
-    //    font-size: 0.85rem;
-    //    border-radius: 20px;
-    //}
-    //
-    //.badge-enabler {
-    //    background: #3D9A3D;
-    //}
-    //
-    //.badge-constraint {
-    //    background: #1976D2;
-    //}
-    //
-    //.tool-features h3 {
-    //    font-size: 1.5rem;
-    //    margin-bottom: 25px;
-    //    color: #333;
-    //}
-    //
-    //.feature-list {
-    //    list-style: none;
-    //    padding: 0;
-    //}
-    //
-    //.feature-list li {
-    //    display: flex;
-    //    align-items: center;
-    //    gap: 15px;
-    //    padding: 15px 0;
-    //    border-bottom: 1px solid #eee;
-    //    font-size: 1.1rem;
-    //}
-    //
-    //.tool-card {
-    //    background: #f8f9fa;
-    //    border-radius: 15px;
-    //    padding: 30px;
-    //    position: sticky;
-    //    top: 30px;
-    //}
-    //
-    //.tool-card h4 {
-    //    font-size: 1.3rem;
-    //    margin-bottom: 15px;
-    //}
-    //
-    //.tool-card p {
-    //    color: #666;
-    //    margin-bottom: 25px;
-    //}
-    //
-    //.btn-block {
-    //    display: flex;
-    //    align-items: center;
-    //    justify-content: center;
-    //    width: 100%;
-    //}
+
+    /* modal */
+
+    /* Action Step Modal Styling */
+    .step-modal .modal-content {
+        border-radius: 16px;
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+
+    .step-modal .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: none;
+        background: transparent;
+        padding: 0 0 20px 0;
+    }
+
+
+    .step-modal .modal-header .close {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        opacity: 1;
+        position: absolute;
+        right: 24px;
+        top: 24px;
+    }
+
+    .step-modal .modal-header .close:hover {
+        opacity: 0.7;
+    }
+
+    .step-modal .modal-header .close svg {
+        width: 20px;
+        height: 20px;
+    }
+
+
+    .step-modal .modal-body {
+        padding: 24px 0 0 0;
+
+        border-top: 1px solid #F1F2F9;
+    }
+
+    .step-modal .modal-body .step-modal-title {
+        font-family: Metropolis;
+        font-weight: 600;
+        font-size: 19px;
+        line-height: 1.2em;
+        letter-spacing: 0;
+        color: #003B54;
+        text-transform: unset;
+    }
+
+
+    /* Hide the default modal title since we're using the badge */
+    .step-modal .modal-header .modal-title {
+        background: #4DA06F33;
+        margin-bottom: 12px;
+        width: 68px;
+        height: 26px;
+        opacity: 1;
+        gap: 10px;
+        border-radius: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Gilroy;
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: -2%;
+        text-align: center;
+        color: #48A56E;
+        text-transform: uppercase;
+    }
+
+    /* Modal footer for navigation buttons */
+    .step-modal .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 24px 24px 24px;
+        border-top: none;
+        background: transparent;
+    }
+
+    .step-modal .modal-footer .btn-back,
+    .step-modal .modal-footer .btn-prev-step {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #170F49;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .step-modal .modal-footer .btn-back:hover,
+    .step-modal .modal-footer .btn-prev-step:hover {
+        background: #f5f5f5;
+        border-color: #ccc;
+    }
+
+    .step-modal .modal-footer .btn-next-step,
+    .step-modal .modal-footer .btn-primary {
+        background: #2288AF;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 24px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .step-modal .modal-footer .btn-next-step:hover,
+    .step-modal .modal-footer .btn-primary:hover {
+        background: #1a6d8a;
+    }
+
+    /* When only one button (first or last step) */
+    .step-modal .modal-footer .btn-primary:only-child,
+    .step-modal .modal-footer .btn-next-step:only-child {
+        margin-left: auto;
+    }
+
+    /* Modal backdrop */
+    .step-modal.modal.fade .modal-dialog {
+        transform: translateY(-20px);
+        transition: transform 0.3s ease-out;
+    }
+
+    .step-modal.modal.show .modal-dialog {
+        transform: translateY(0);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 576px) {
+        .step-modal .modal-content {
+            margin: 16px;
+            border-radius: 12px;
+        }
+
+        .step-modal .modal-header {
+            padding: 20px 20px 0 20px;
+        }
+
+        .step-modal .modal-body {
+            padding: 20px 20px 24px 20px;
+        }
+
+        .step-modal .modal-footer {
+            padding: 0 20px 20px 20px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .step-modal .modal-footer .btn-back,
+        .step-modal .modal-footer .btn-prev-step,
+        .step-modal .modal-footer .btn-next-step,
+        .step-modal .modal-footer .btn-primary {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    /* end modal*/
 
     .tool-detail-container{
         h3{
@@ -1523,6 +1623,37 @@
             align-items: center;
             padding: 0;
             text-align: center;
+
+            &.step-item-1{
+                left: 0;
+            }
+            &.step-item-2{
+
+            }
+            &.step-item-3{
+                left: 0;
+            }
+            &.step-item-4{
+
+            }
+            &.step-item-5{
+                left: 0;
+            }
+            &.step-item-6{
+
+            }
+            &.step-item-7{
+                left: 0;
+            }
+            &.step-item-8{
+
+            }
+            &.step-item-9{
+                left: 0;
+            }
+            &.step-item-10{
+
+            }
         }
 
         .step-item.step-right .step-content,
@@ -1706,30 +1837,30 @@
         line-height: 115%; /* 28.75px */
     }
 
-
-    .btn{
-        background: #33DBCE url("../../assets/images/ArrowRight.svg") no-repeat;
-        background-position: right 24px center;
-        background-size: 13px;
-        border-radius: 8px;
-        box-shadow: 0 4px 16px 0 rgba(23, 23, 23, 0.04);
-        z-index: 999;
-        position: relative;
-        padding-right: 58px;
-        border: 1px solid #33DBCE;
-        transition: all 0.3s ease-in-out;
-
-        color: #FFF;
-        font-family: Gilroy;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 22px; /* 137.5% */
-
-        &:hover{
-            opacity: 0.6!important;
-        }
-    }
+    //
+    //.btn{
+    //    background: #33DBCE url("../../assets/images/ArrowRight.svg") no-repeat;
+    //    background-position: right 24px center;
+    //    background-size: 13px;
+    //    border-radius: 8px;
+    //    box-shadow: 0 4px 16px 0 rgba(23, 23, 23, 0.04);
+    //    z-index: 999;
+    //    position: relative;
+    //    padding-right: 58px;
+    //    border: 1px solid #33DBCE;
+    //    transition: all 0.3s ease-in-out;
+    //
+    //    color: #FFF;
+    //    font-family: Gilroy;
+    //    font-size: 16px;
+    //    font-style: normal;
+    //    font-weight: 600;
+    //    line-height: 22px; /* 137.5% */
+    //
+    //    &:hover{
+    //        opacity: 0.6!important;
+    //    }
+    //}
 
 }
 
