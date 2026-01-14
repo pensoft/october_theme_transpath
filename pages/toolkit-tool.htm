@@ -49,15 +49,13 @@ $tool = Tool::active()
 ==
 <section class="container700 tool-detail-container">
     <div class="row">
-        <div class="col-md-6 col-xs-12 end-md center-xs">
+        <div class="col-md-12 col-xs-12 end-md center-xs">
             <div class="question_container">
-                <img src="{{ 'assets/images/question_image.svg'|theme }}">
                 <div class="text">What does it cost you to be a steward of nature?</div>
             </div>
         </div>
-        <div class="col-md-6 col-xs-12 start-md center-xs">
+        <div class="col-md-12 col-xs-12 start-md center-xs">
             <div class="question_container">
-                <img src="{{ 'assets/images/question_image.svg'|theme }}">
                 <div class="text">Is nature stewardship a core goal in your context?</div>
             </div>
         </div>
@@ -77,11 +75,27 @@ $tool = Tool::active()
     {% if tool.end_goal %}
     <div class="row goals">
         <div class="col-xs-12">
-            <h3>End goal of this tool:</h3>
+            <h3>What you will achieve with this tool?</h3>
         </div>
-        <div class="col-xs-12">
+        <div class="col-xs-12 goal-content">
             <p>{{ tool.end_goal }}</p>
         </div>
+    </div>
+    {% endif %}
+
+    {% if tool.transform_with %}
+    <div class="row for_whom">
+        <div class="col-xs-12">
+            <h3>With whom and for whom is are you transforming?</h3>
+        </div>
+        {% for stakeholder in tool.transform_with %}
+<!--        <div class="col-md-6 col-xs-12 {% if loop.index is odd %}end-md{% else %}start-md{% endif %} center-xs">-->
+        <div class="col-md-6 col-xs-12 {{ stakeholder.name|slug }}">
+            <div class="question2_container">
+                {{ stakeholder.name }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
     {% endif %}
 
@@ -97,7 +111,7 @@ $tool = Tool::active()
     {% endif %}
 
     {% if tool.video_url %}
-    <div class="row">
+    <div class="row video_content">
         <div class="col-xs-12">
             <iframe width="100%" height="341" src="{{ tool.video_url }}"
                     title="{{ tool.inspiration_title ?: 'Video' }}"
@@ -116,8 +130,8 @@ $tool = Tool::active()
         <div class="container700">
             <div class="row">
                 <div class="col-xs-12">
-                    <h3 class="action-steps-title">Explore how to take action</h3>
-                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>
+                    <h3 class="action-steps-title">Actionable steps</h3>
+<!--                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>-->
                 </div>
             </div>
 
@@ -127,17 +141,12 @@ $tool = Tool::active()
                         <path class="timeline-curve" d="
                         {% for step in tool.action_steps %}
                             {% set yPos = loop.index0 * 220 + 60 %}
-                            {% if loop.first %}
-                                M 300 0
-                                Q 300 {{ yPos - 30 }}, {% if loop.index is odd %}380{% else %}220{% endif %} {{ yPos }}
-                            {% else %}
-                                {% set prevY = (loop.index0 - 1) * 220 + 60 %}
+                            {% set prevY = (loop.index0 - 1) * 220 + 60 %}
                                 {% if loop.index is odd %}
                                     Q 220 {{ (prevY + yPos) / 2 }}, 380 {{ yPos }}
                                 {% else %}
                                     Q 380 {{ (prevY + yPos) / 2 }}, 220 {{ yPos }}
                                 {% endif %}
-                            {% endif %}
                         {% endfor %}
                         {% set lastY = (tool.action_steps|length - 1) * 220 + 60 %}
                         Q {% if tool.action_steps|length is odd %}380{% else %}220{% endif %} {{ lastY + 80 }}, 300 {{ lastY + 160 }}
@@ -146,7 +155,7 @@ $tool = Tool::active()
                 </div>
 
                 {% for step in tool.action_steps %}
-                <div class="step-item {% if loop.index is odd %}step-right{% else %}step-left{% endif %}">
+                <div class="step-item step-item-{{loop.index}} {% if loop.index is odd %}step-right{% else %}step-left{% endif %}">
                     <div class="step-circle-wrapper">
                         <div class="step-circle">
                             <div class="step-circle-inner">
@@ -156,9 +165,9 @@ $tool = Tool::active()
                     </div>
                     <div class="step-content">
                         <span class="step-label">STEP {{ step.step_number ?: loop.index }}</span>
-                        <p class="step-text">{{ step.step_title }}</p>
+                        <span class="step-text">{{ step.step_title }}</span>
                         {% if step.step_content %}
-                        <a href="#step-{{ loop.index }}" class="step-readmore">Read more →</a>
+                        <a href="#step-{{ loop.index }}" class="step-readmore">Read more</a>
                         {% endif %}
                     </div>
                 </div>
@@ -169,24 +178,10 @@ $tool = Tool::active()
     {% endif %}
 
 
-    {% if tool.transform_with %}
-    <div class="row">
-        <div class="col-xs-12">
-            <h3 style="text-align: center;">It's time to transform together.<br>
-                With whom and for whom are you transforming?</h3>
-        </div>
-        {% for stakeholder in tool.transform_with %}
-        <div class="col-md-6 col-xs-12 {% if loop.index is odd %}end-md{% else %}start-md{% endif %} center-xs">
-            <div class="question2_container">
-                {{ stakeholder.name }}
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+
 
     {% if tool.power_dynamics_content %}
-    <div class="row">
+    <div class="row power_dynamics_content">
         <div class="col-xs-12">
             <h3 style="text-align: center;">Which power dynamics might hinder local communities from caring for ecosystems?</h3>
         </div>
@@ -202,31 +197,10 @@ $tool = Tool::active()
     {% partial 'svg_tool' %}
 </section>
 
-<!--&lt;!&ndash; Features Section &ndash;&gt;-->
-<!--{% if features_list %}-->
-<!--<section class="container700">-->
-<!--    <div class="row">-->
-<!--        <div class="col-xs-12">-->
-<!--            <h3>What's Included</h3>-->
-<!--            <ul class="feature-list">-->
-<!--                {% for feature in features_list %}-->
-<!--                <li>-->
-<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2">-->
-<!--                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>-->
-<!--                        <polyline points="22 4 12 14.01 9 11.01"></polyline>-->
-<!--                    </svg>-->
-<!--                    {{ feature }}-->
-<!--                </li>-->
-<!--                {% endfor %}-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
-<!--{% endif %}-->
 
 <!-- References Section -->
 {% if tool.references_content %}
-<section class="container700 tool-detail-container">
+<section class="container700 references tool-detail-container">
     <div class="row">
         <div class="col-xs-12">
             <h3>References</h3>
