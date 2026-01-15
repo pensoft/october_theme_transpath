@@ -10,8 +10,8 @@ use Pensoft\Toolset\Models\Stage;
 function onStart()
 {
     $role = $this->param('role');
-$stage = $this->param('stage');
-$challenge = $this->param('challenge');
+    $stage = $this->param('stage');
+    $challenge = $this->param('challenge');
 
 $this['role'] = $role;
 $this['stage'] = $stage;
@@ -20,34 +20,56 @@ $this['tool'] = null;
 
 // Validate role
 if (!in_array($role, ['researcher', 'practitioner'])) {
-return \Redirect::to('/toolkit');
+    return \Redirect::to('/toolkit');
 }
 
 // Find the tool
 $tool = Tool::active()
-->byRole($role)
-->bySlug($challenge)
-->whereHas('stage', function($q) use ($stage) {
-$q->where('name', $stage);
-})
-->with('stage')
-->first();
+        ->byRole($role)
+        ->bySlug($challenge)
+        ->whereHas('stage', function($q) use ($stage) {
+            $q->where('name', $stage);
+        })
+        ->with('stage')
+        ->first();
 
 if (!$tool) {
-return \Redirect::to('/toolkit');
+    return \Redirect::to('/toolkit');
 }
 
 // Pass tool data to the page
 $this['tool'] = $tool;
 $this['tool_title'] = $tool->title;
+$this['tool_level'] = $tool->level;
 
 // Helper arrays for easy access in templates
 $this['features_list'] = $tool->features_list;
 $this['stakeholders_list'] = $tool->stakeholders_list;
+
 }
 ?>
 ==
 <section class="container700 tool-detail-container">
+    <div class="scroll_down">
+        <a href="javascript:void(0);" id="scrollDownBtn">
+            Scroll down to explore the tool
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 0.5L5 11.5M5 11.5L9.5 6.91667M5 11.5L0.500001 6.91667" stroke="#2288AF" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </div>
+    <div class="side_info_bubble" id="sideInfoBubble">
+        <img src="{{'/assets/images/eyes.svg'|theme}}">
+        Take a moment to recognise the lenses shaping the way you see things
+    </div>
+
+    <div class="developed_by_info_bubble">
+        <img src="{{'/assets/images/maria.png'|theme}}">
+        Tool developed by:<br>
+        <span class="name">Maria Thomposon</span>
+        <a href="mailto: maria@wur.nl" target="_blank">maria@wur.nl</a>
+    </div>
+
     <div class="row">
         <div class="col-md-12 col-xs-12 end-md center-xs">
             <div class="question_container">
@@ -130,8 +152,8 @@ $this['stakeholders_list'] = $tool->stakeholders_list;
         <div class="container700">
             <div class="row">
                 <div class="col-xs-12">
-                    <h3 class="action-steps-title">Actionable steps</h3>
-                    <!--                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>-->
+                    <h3 class="action-steps-title">Explore how to take action</h3>
+                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>
                 </div>
             </div>
 

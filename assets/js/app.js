@@ -321,6 +321,41 @@ $(document).ready(function() {
     $('.library-item .btn.btn-primary').html('Download <i></i>');
 
 
+    document.getElementById('scrollDownBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.getElementById('sideInfoBubble');
+        if (target) {
+            var offset = 100;
+            var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            var startPosition = window.pageYOffset;
+            var distance = targetPosition - startPosition;
+            var duration = 1500; // Duration in milliseconds (1.5 seconds - adjust for slower/faster)
+            var startTime = null;
+
+            function easeInOutCubic(t) {
+                return t < 0.5
+                    ? 4 * t * t * t
+                    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                var timeElapsed = currentTime - startTime;
+                var progress = Math.min(timeElapsed / duration, 1);
+                var ease = easeInOutCubic(progress);
+
+                window.scrollTo(0, startPosition + (distance * ease));
+
+                if (timeElapsed < duration) {
+                    requestAnimationFrame(animation);
+                }
+            }
+
+            requestAnimationFrame(animation);
+        }
+    });
+
+
 });
 
 function handleTreeSVGMapMouseMove(event) {
