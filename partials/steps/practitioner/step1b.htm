@@ -19,7 +19,13 @@
                 </g>
             </svg>
         </div>
-        <h4 class="step-question">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</h4>
+        {% if step1Value == 'local' %}
+        <p>To create real change, it is necessary to boost what helps: <b>enablers</b></p>
+        <p>And to reduce what holds us back: <b>constraints</b></p>
+        {% else %}
+        <p>To create real change, it is necessary to boost what helps: <b>enablers</b></p>
+        <p>And to reduce what holds us back: <b>constraints</b></p>
+        {% endif %}
     </div>
 
     <div class="modal-footer">

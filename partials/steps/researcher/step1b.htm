@@ -19,7 +19,29 @@
                 </g>
             </svg>
         </div>
-        <h4 class="step-question">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</h4>
+        <div class="step-options researcher step2 {{step1Value}}">
+            {% if step1Value == 'just-starting' %}
+            <p>Your research questions are not  neutral, they mirror your assumptions and the way you perceive the systems you aim to transform.</p>
+
+            <h4 class="step-question">Which past experiences sparked your interest in this topic?</h4>
+            <h4 class="step-question">What emotions are connected to those experiences, and how might they influence your perspective?</h4>
+
+            {% elseif step1Value == 'midway' %}
+            <p>Only 1% of 137 consulted papers moved from consultation to true participation, where research participants were central to decision-making and contributed directly to societal change.</p>
+
+            <p>(Galende-Sánchez & Sorman, 2021)</p>
+
+            <h4 class="step-question">How participatory is your research?</h4>
+            <h4 class="step-question">What steps could you take to move beyond consultation towards true co-creation?</h4>
+
+
+            {% elseif step1Value == 'finalizing' %}
+            <h4 class="step-question">How you interpret and present results can reinforce or challenge dominant narratives.</h4>
+            <h4 class="step-question">Whose voices are amplified in your conclusions, and whose are missing?</h4>
+            {% endif %}
+        </div>
+
+
     </div>
 
     <div class="modal-footer">
