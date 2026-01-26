@@ -359,22 +359,28 @@ $(document).ready(function() {
 });
 
 function handleTreeSVGMapMouseMove(event) {
-    var title = $(event.target).parent().attr('title');
-    var desc = $(event.target).parent().attr('desc');
+    var $parent = $(event.target).parent();
+    var title = $parent.attr('title');
+    var desc = $parent.attr('desc');
     var tooltip = document.getElementById("tooltip");
 
-    if (typeof title  == "undefined"){
+    if (typeof title == "undefined") {
         return tooltip.classList.remove("active");
     }
+
     var x = event.clientX;
     var y = event.clientY;
 
-    tooltip.style.left = (x - 250) + "px";
-    tooltip.style.top = (y - 20) + "px";
+    // // Get custom offsets from data attributes, or use defaults
+    var offsetX = parseInt($parent.attr('data-tooltip-x'));
+    var offsetY = parseInt($parent.attr('data-tooltip-y'));
+
+    tooltip.style.left = (x - offsetX) + "px";
+    tooltip.style.top = (y - offsetY) + "px";
+
 
     tooltip.innerHTML = '<div class="tooltip_flag_container"><h4>' + title + '</h4><p>' + desc + '</p></div>';
     tooltip.classList.add("active");
-
 }
 
 function handleToolSVGMapMouseMove(event) {

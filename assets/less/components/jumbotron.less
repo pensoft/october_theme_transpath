@@ -225,6 +225,87 @@
         .container{
             padding: 0;
         }
+
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+
+            ol {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                counter-reset: step-counter;
+
+                li {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    flex: 1;
+                    position: relative;
+                    counter-increment: step-counter;
+
+                    &::before {
+                        content: counter(step-counter);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 61px;
+                        height: 61px;
+                        margin-bottom: 15px;
+                        font-family: Metropolis;
+                        font-weight: 600;
+                        font-size: 16px;
+                        line-height: 100%;
+                        letter-spacing: 0%;
+                        text-align: center;
+                        color: #003B54;
+                        background-image: url('../../assets/images/circle-steps.svg');
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        position: relative;
+                        z-index: 2;
+                    }
+
+                    // Connecting line between circles
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        top: 30px; // Half of circle height (61px / 2)
+                        left: calc(25% + 40px); // Start after the circle
+                        width: calc(100% - 30px); // Full width minus circle diameter
+                        height: 1px;
+                        background: #E6EFF3;
+                        //background-size: 8px 2px; // Dashed line effect
+                        z-index: 1;
+                    }
+
+                    // Remove line from last item
+                    &:last-child::after {
+                        display: none;
+                    }
+
+                    .step-text {
+                        line-height: 1.4em;
+                        color: #003B54;
+                        max-width: 145px;
+                        font-weight: 600;
+                        font-size: 15px;
+                        letter-spacing: 0%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
     }
 
     .role{
@@ -1508,6 +1589,8 @@
     .action-steps-section {
         //background: #fff;
         //overflow: hidden;
+        background: url("../../assets/images/background-steps.png") center no-repeat;
+        background-size: contain;
     }
 
     .action-steps-title {
@@ -1528,6 +1611,7 @@
         max-width: 700px;
         margin: 0 auto;
         padding: 20px 0;
+
 
         .breakpoint-large-down({
             padding: 20px;
