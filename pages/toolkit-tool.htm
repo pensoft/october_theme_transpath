@@ -1,4 +1,4 @@
-url = "/toolkit/tool/:role/:stage/:challenge"
+url = "/toolkit/tool/:role/:stage/:category/:tool?"
 layout = "default"
 title = "Tool Details"
 
@@ -6,46 +6,82 @@ title = "Tool Details"
 <?php
 use Pensoft\Toolset\Models\Tool;
 use Pensoft\Toolset\Models\Stage;
+use Pensoft\Toolset\Models\Category;
 
-function onStart()
-{
+function onStart(){
     $role = $this->param('role');
-    $stage = $this->param('stage');
-    $challenge = $this->param('challenge');
+    $stageSlug = $this->param('stage');
+    $categorySlug = $this->param('category');
+    $toolSlug = $this->param('tool');
 
-$this['role'] = $role;
-$this['stage'] = $stage;
-$this['challenge'] = $challenge;
-$this['tool'] = null;
+    $this['role'] = $role;
+    $this['stageSlug'] = $stageSlug;
+    $this['categorySlug'] = $categorySlug;
+    $this['tool'] = null;
 
-// Validate role
-if (!in_array($role, ['researcher', 'practitioner'])) {
-    return \Redirect::to('/toolkit');
-}
+    // Validate role
+    if (!in_array($role, ['researcher', 'practitioner'])) {
+        return \Redirect::to('/toolkit');
+    }
 
-// Find the tool
-$tool = Tool::active()
-        ->byRole($role)
-        ->bySlug($challenge)
-        ->whereHas('stage', function($q) use ($stage) {
-            $q->where('name', $stage);
-        })
-        ->with('stage')
+    // Find the stage
+    $stage = Stage::where('name', $stageSlug)
+        ->where('role', $role)
         ->first();
 
-if (!$tool) {
-    return \Redirect::to('/toolkit');
-}
+    if (!$stage) {
+        return \Redirect::to('/toolkit');
+    }
 
-// Pass tool data to the page
-$this['tool'] = $tool;
-$this['tool_title'] = $tool->title;
-$this['tool_level'] = $tool->level;
+    // Find the category
+    $category = Category::where('slug', $categorySlug)
+        ->where('role', $role)
+        ->where('stage_id', $stage->id)
+        ->first();
 
-// Helper arrays for easy access in templates
-$this['features_list'] = $tool->features_list;
-$this['stakeholders_list'] = $tool->stakeholders_list;
+    if (!$category) {
+        return \Redirect::to('/toolkit');
+    }
 
+    $this['stage'] = $stage;
+    $this['category'] = $category;
+
+    // If tool slug is provided, find specific tool
+    if ($toolSlug) {
+        $tool = Tool::where('slug', $toolSlug)
+            ->where('role', $role)
+            ->where('category_id', $category->id)
+            ->where('is_active', true)
+            ->first();
+    } else {
+        // If no tool slug, get the first tool in this category
+        $tool = Tool::where('role', $role)
+            ->where('category_id', $category->id)
+            ->where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->first();
+    }
+
+    if (!$tool) {
+        return \Redirect::to('/toolkit');
+    }
+
+    // Get all tools in this category for navigation
+    $allTools = Tool::where('role', $role)
+        ->where('category_id', $category->id)
+        ->where('is_active', true)
+        ->orderBy('sort_order', 'asc')
+        ->get();
+
+    // Pass data to the page
+    $this['tool'] = $tool;
+    $this['allTools'] = $allTools;
+    $this['tool_title'] = $tool->title;
+    $this['tool_level'] = $tool->level ?? null;
+
+    // Helper arrays for easy access in templates
+    $this['features_list'] = $tool->features_list ?? [];
+    $this['stakeholders_list'] = $tool->stakeholders_list ?? [];
 }
 ?>
 ==

@@ -21,6 +21,10 @@ description_limit = 0
 ==
 <?php
 
+use Pensoft\Toolset\Models\Stage;
+use Pensoft\Toolset\Models\Category;
+use Pensoft\Toolset\Models\Tool;
+
 function onOpenModal()
 {
     $roleType = post('role_type');
@@ -30,30 +34,76 @@ function onOpenModal()
         throw new \ValidationException(['role' => 'Please select a role']);
 }
 
+// Fetch stages for this role
+$stages = Stage::where('role', $roleType)
+->orderBy('sort_order', 'asc')
+->get();
+
 return [
 '#modalContent' => $this->renderPartial($partial, [
-'roleType' => $roleType
+'roleType' => $roleType,
+'stages' => $stages
 ])
 ];
 }
 
 function onLoadStep()
 {
-$step = post('step');
 $roleType = post('role_type');
 $step1Value = post('step1_value');
 $step2Value = post('step2_value');
-$sliderValue = post('slider_value');
 $partial = post('partial');
 
-    return [
-        '#modalContent' => $this->renderPartial($partial, [
-            'roleType' => $roleType,
-            'step1Value' => $step1Value,
-            'step2Value' => $step2Value,
-            'sliderValue' => $sliderValue
-        ])
-    ];
+// Fetch stages for this role
+$stages = Stage::where('role', $roleType)
+->orderBy('sort_order', 'asc')
+->get();
+
+// Fetch the selected stage by name (slug format)
+$selectedStage = null;
+if ($step1Value) {
+$selectedStage = Stage::where('role', $roleType)
+->where('name', $step1Value)
+->first();
+}
+
+// Fetch categories for step 2 based on role and selected stage
+$categories = collect([]);
+if ($selectedStage) {
+$categories = Category::where('role', $roleType)
+->where('stage_id', $selectedStage->id)
+->orderBy('sort_order', 'asc')
+->get();
+}
+
+// Fetch selected category for step 3
+$selectedCategory = null;
+if ($step2Value) {
+$selectedCategory = Category::where('slug', $step2Value)->first();
+}
+
+// Fetch tools for step 3 based on role and category
+$tools = collect([]);
+if ($selectedCategory) {
+$tools = Tool::where('role', $roleType)
+->where('category_id', $selectedCategory->id)
+->where('is_active', true)
+->orderBy('sort_order', 'asc')
+->get();
+}
+
+return [
+'#modalContent' => $this->renderPartial($partial, [
+'roleType' => $roleType,
+'step1Value' => $step1Value,
+'step2Value' => $step2Value,
+'stages' => $stages,
+'selectedStage' => $selectedStage,
+'categories' => $categories,
+'selectedCategory' => $selectedCategory,
+'tools' => $tools
+])
+];
 }
 ?>
 ==

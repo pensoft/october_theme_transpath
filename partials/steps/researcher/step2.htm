@@ -1,68 +1,27 @@
 <div class="step-content">
-   <div class="row middle-xs">
+    <div class="row middle-xs">
         <div class="col-md-10 col-xs-12 start-md center-xs">
-            <h4 class="step-question">Which challenge are you facing?</h4>
+            <h4 class="step-question">What would you like to explore?</h4>
         </div>
-        <div class="col-md-2 col-xs-12 end-md center-x">
+        <div class="col-md-2 col-xs-12 end-md center-xs">
             <div class="step-label">Step 2 / 3</div>
         </div>
     </div>
 
+    {% if selectedStage %}
+    <!--<div class="stage-label">{{ selectedStage.title }}</div>-->
+    {% endif %}
 
-
-    <div class="step-options researcher step2 {{step1Value}}">
-        {% if step1Value == 'just-starting' %}
+    <div class="step-options researcher step2 {{ step1Value }}">
+        {% if categories is not empty %}
+        {% for category in categories %}
         <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="assessing-positionality">
-            <span class="form-check-label">Assessing positionality</span>
+            <input class="form-check-input" type="radio" name="step2" value="{{ category.slug }}">
+            <span class="form-check-label">{{ category.title }}</span>
         </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="defining-research-approach">
-            <span class="form-check-label">Defining research approach</span>
-        </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="communication-jargon">
-            <span class="form-check-label">Communication jargon</span>
-        </label>
-
-        {% elseif step1Value == 'midway' %}
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="involvement-with-community">
-            <span class="form-check-label">Involvement with the community</span>
-        </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="ensuring-participation">
-            <span class="form-check-label">Ensuring participation</span>
-        </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="stakeholder-identification-fatigue">
-            <span class="form-check-label">Stakeholder identification and fatigue</span>
-        </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="building-trust-collaboration">
-            <span class="form-check-label">Building trust and collaboration</span>
-        </label>
-
-        {% elseif step1Value == 'finalizing' %}
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="community-centered-reporting">
-            <span class="form-check-label">Community centered reporting</span>
-        </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="achieving-shared-understanding">
-            <span class="form-check-label">Achieving shared understanding</span>
-        </label>
-
-        <label class="form-check">
-            <input class="form-check-input" type="radio" name="step2" value="ensuring-transformative-impact">
-            <span class="form-check-label">Ensuring transformative impact</span>
-        </label>
+        {% endfor %}
+        {% else %}
+        <p class="no-items-message">No categories available for this stage.</p>
         {% endif %}
     </div>
 
