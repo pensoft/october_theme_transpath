@@ -192,3 +192,11 @@ function updateStepIndicator(step) {
 $(document).ready(function() {
     initToolkitModal();
 });
+
+// Action Steps Modal - Open on "Read more" click
+$(document).on('click', '.step-readmore', function(e) {
+    e.preventDefault();
+    var targetModal = $(this).data('target');
+    $(targetModal).modal('show');
+});
+

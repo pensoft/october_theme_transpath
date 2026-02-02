@@ -86,212 +86,287 @@ function onStart(){
 ?>
 ==
 <div class="tool-detail-container">
-    <section class="container700">
-        <div class="scroll_down">
-            <a href="javascript:void(0);" id="scrollDownBtn">
-                Scroll down to explore the tool
-                <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 0.5L5 11.5M5 11.5L9.5 6.91667M5 11.5L0.500001 6.91667" stroke="#2288AF" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
-        <div class="side_info_bubble" id="sideInfoBubble">
-            <img src="{{'/assets/images/eyes.svg'|theme}}">
-            Take a moment to recognise the lenses shaping the way you see things
-        </div>
-
-
-
-        {% if tool.intro_questions %}
+    <div class="container">
         <div class="row">
-            {% for q in tool.intro_questions %}
-            <div class="col-md-12 col-xs-12 end-md center-xs">
-                <div class="question_container">
-                    <div class="text">{{q.question}}</div>
-                </div>
+            <div class="col-md-4 col-xs-12">
+                <!-- Left Sidebar Navigation -->
+                <nav class="tool-sidebar">
+                    <ul>
+                        <li><a href="#section-starting-point" class="active">Understand your starting point</a></li>
+                        {% if tool.inspiration_title or tool.video_url %}
+                        <li><a href="#section-inspired">Get inspired</a></li>
+                        {% endif %}
+                        {% if tool.action_steps %}
+                        <li><a href="#section-action-steps">Design pathways</a></li>
+                        {% endif %}
+                        {% if tool.transform_with or tool.power_dynamics_content %}
+                        <li><a href="#section-transform">Enable transformation</a></li>
+                        {% endif %}
+                        {% if tool.references_content %}
+                        <li><a href="#section-references">References</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
-            {% endfor %}
-
-        </div>
-        {% endif %}
-
-
-        {% if tool.intro_question %}
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>{{ tool.intro_question }}</h3>
-            </div>
-            <div class="col-xs-12">
-                {{ tool.intro_content|raw }}
-            </div>
-        </div>
-        {% endif %}
-
-        {% if tool.end_goal %}
-        <div class="row goals">
-            <div class="col-xs-12">
-                <h3>What you will achieve with this tool?</h3>
-            </div>
-            <div class="col-xs-12 goal-content">
-                <p>{{ tool.end_goal }}</p>
-            </div>
-        </div>
-        {% endif %}
-
-        {% if tool.transform_with %}
-        <div class="row for_whom">
-            <div class="col-xs-12">
-                <h3>With whom and for whom is are you transforming?</h3>
-            </div>
-            {% for stakeholder in tool.transform_with %}
-            <!--        <div class="col-md-6 col-xs-12 {% if loop.index is odd %}end-md{% else %}start-md{% endif %} center-xs">-->
-            <div class="col-md-6 col-xs-12 {{ stakeholder.name|slug }}">
-                <div class="question2_container">
-                    {{ stakeholder.name }}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% if tool.inspiration_title %}
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>Get inspired by: {{ tool.inspiration_title }}</h3>
-            </div>
-            <div class="col-xs-12">
-                {{ tool.inspiration_content|raw }}
-            </div>
-        </div>
-        {% endif %}
-
-        {% if tool.video_url %}
-        <div class="row video_content">
-            <div class="col-xs-12">
-                <iframe width="100%" height="341" src="{{ tool.video_url }}"
-                        title="{{ tool.inspiration_title ?: 'Video' }}"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-            <div class="col-xs-12">
-                <a href="{{ tool.video_url }}" class="btn btn-primary" target="_blank">Watch this video</a>
-            </div>
-        </div>
-        {% endif %}
-    </section>
-
-        {% if tool.action_steps %}
-        <section class="action-steps-section">
-            <div class="container700">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3 class="action-steps-title">Explore how to take action</h3>
-                        <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>
-                    </div>
-                </div>
-
-                <div class="action-steps-timeline">
-                    <div class="timeline-path"></div>
-
-                    {% set totalSteps = tool.action_steps|length %}
-
-                    {% for step in tool.action_steps %}
-                    <div class="step-item step-item-{{loop.index}} {% if loop.index is odd %}step-right{% else %}step-left{% endif %}" data-step="{{ loop.index }}">
-                        <div class="step-circle-wrapper">
-                            <div class="step-circle">
-                                <div class="step-circle-inner">
-                                    <span class="step-number">{{ step.step_number ?: loop.index }}</span>
+            <div class="col-md-8 col-xs-12">
+                <div class="tool-content-wrapper">
+                    <section class="container700" id="section-starting-point">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 end-md center-xs">
+                                <div class="take_a_look_container">
+                                    <div class="text">Take a moment to recognise the lenses shaping the way you see things</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="step-content">
-                            <span class="step-label">STEP {{ step.step_number ?: loop.index }}</span>
-                            <span class="step-text">{{ step.step_title }}</span>
-                            {% if step.step_content %}
-                            <a href="javascript:void(0);" class="step-readmore" data-target="#step-modal-{{ loop.index }}">Read more</a>
-                            {% endif %}
+                        {% if tool.intro_questions %}
+                        <div class="row">
+                            {% for q in tool.intro_questions %}
+                            <div class="col-md-12 col-xs-12 end-md center-xs">
+                                <div class="question_container">
+                                    <div class="text">{{q.question}}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        {% if tool.intro_content %}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                {{ tool.intro_content|raw }}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if tool.end_goal %}
+                        <div class="row goals">
+                            <div class="col-xs-12">
+                                <h3>What you will achieve with this tool?</h3>
+                            </div>
+                            <div class="col-xs-12 goal-content">
+                                <p>{{ tool.end_goal }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </section>
+
+                    {% if tool.inspiration_title or tool.video_url %}
+                    <section class="container700" id="section-inspired">
+                        {% if tool.inspiration_title %}
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>Get inspired by: {{ tool.inspiration_title }}</h3>
+                            </div>
+                            <div class="col-xs-12">
+                                {{ tool.inspiration_content|raw }}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if tool.video_url %}
+                        <div class="row video_content">
+                            <div class="col-xs-12">
+                                <iframe width="100%" height="341" src="{{ tool.video_url }}"
+                                        title="{{ tool.inspiration_title ?: 'Video' }}"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="col-xs-12">
+                                <a href="{{ tool.video_url }}" class="btn btn-primary" target="_blank">Watch this video</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </section>
+                    {% endif %}
+
+                    {% if tool.action_steps %}
+                    <section class="action-steps-section" id="section-action-steps">
+                        <div class="container700">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3 class="action-steps-title">Explore how to take action</h3>
+                                    <p class="action-steps-subtitle">Remember, this is an inspiration guide (not a recipe) to help you decide what will be most transformative for your context. Every context is unique!</p>
+                                </div>
+                            </div>
+
+                            <div class="action-steps-timeline">
+                                <div class="timeline-path"></div>
+
+                                {% set totalSteps = tool.action_steps|length %}
+
+                                {% for step in tool.action_steps %}
+                                <div class="step-item step-item-{{loop.index}} {% if loop.index is odd %}step-right{% else %}step-left{% endif %}" data-step="{{ loop.index }}">
+                                    <div class="step-circle-wrapper">
+                                        <div class="step-circle">
+                                            <div class="step-circle-inner">
+                                                <span class="step-number">{{ step.step_number ?: loop.index }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <span class="step-label">STEP {{ step.step_number ?: loop.index }}</span>
+                                        <span class="step-text">{{ step.step_title }}</span>
+                                        {% if step.step_content or step.step_file %}
+                                        <a href="javascript:void(0);" class="step-readmore" data-toggle="modal" data-target="#step-modal-{{ loop.index }}">Read more</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Modals -->
+                    {% for step in tool.action_steps %}
+                    <div class="modal fade step-modal" id="step-modal-{{ loop.index }}"
+                         tabindex="-1" role="dialog" aria-labelledby="modal-title-step-{{ loop.index }}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-title-step-{{ loop.index }}">Step {{ step.step_number ?: loop.index }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                        <path d="M1 20.22L20.0269 1.19299" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M1 1L20.0269 20.027" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4 class="step-modal-title">{{ step.step_title }}</h4>
+                                    <div class="step-modal-content">
+                                        {{ step.step_content|raw }}
+                                        {% if step.step_file %}
+                                        <a target="_blank" href="{{step.step_file|media}}" class="btn btn-primary no-margin"><i></i> Download</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
-                </div>
-            </div>
-        </section>
+                    {% endif %}
 
-        <!-- Modals outside the timeline loop -->
-        {% for step in tool.action_steps %}
-        <div class="modal fade step-modal" id="step-modal-{{ loop.index }}"
-             tabindex="-1" role="dialog" aria-labelledby="modal-title-step-{{ loop.index }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal-title-step-{{ loop.index }}">Step {{ step.step_number ?: loop.index }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                    <path d="M1 20.22L20.0269 1.19299" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M1 1L20.0269 20.027" stroke="#2288AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h4 class="step-modal-title">{{ step.step_title }}</h4>
-                        <div class="step-modal-content">
-                            {{ step.step_content|raw }}
+                    {% if tool.transform_with or tool.power_dynamics_content %}
+                    <section class="container700" id="section-transform">
+                        {% if tool.transform_with %}
+                        <div class="row for_whom">
+                            <div class="col-xs-12">
+                                <h3>With whom and for whom is are you transforming?</h3>
+                            </div>
+                            {% for stakeholder in tool.transform_with %}
+                            <div class="col-md-6 col-xs-12 {{ stakeholder.name|slug }}">
+                                <div class="question2_container">
+                                    {{ stakeholder.name }}
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
-                    </div>
+                        {% endif %}
+
+                        {% if tool.power_dynamics_content %}
+                        <div class="row power_dynamics_content">
+                            <div class="col-xs-12">
+                                <h3>Which power dynamics might hinder local communities from caring for ecosystems?</h3>
+                            </div>
+                            <div class="col-xs-12">
+                                {{ tool.power_dynamics_content|raw }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </section>
+                    {% endif %}
+
+                    {% if tool.power_dynamics_now or tool.power_dynamics_short or tool.power_dynamics_mid or tool.power_dynamics_long %}
+                    <section class="container700">
+                        {% partial 'svg_tool' now=tool.power_dynamics_now short=tool.power_dynamics_short mid=tool.power_dynamics_mid long=tool.power_dynamics_long %}
+                    </section>
+                    {% endif %}
+
+                    {% if tool.references_content %}
+                    <section class="container700 references" id="section-references" style="padding: 0;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>References</h3>
+                            </div>
+                            <div class="col-xs-12">
+                                {{ tool.references_content|raw }}
+                            </div>
+                        </div>
+                    </section>
+                    {% endif %}
+
+                    <section class="container700 references">
+                        <div class="row developed_by_info_bubble">
+                            <div class="col-xs-12">
+                                <h3>Developed by</h3>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="row middle-xs">
+                                    <div class="col-xs-2">
+                                        <img src="{{'MariaT.png'|media}}">
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <span class="name">Maria Thomposon</span>
+                                        <a href="mailto: maria@wur.nl" target="_blank">maria@wur.nl</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
-        {% endfor %}
-        {% endif %}
 
 
 
-
-        {% if tool.power_dynamics_content %}
-        <section class="container700">
-            <div class="row power_dynamics_content">
-        <!--        <div class="col-xs-12">-->
-        <!--            <h3 style="text-align: center;">Which power dynamics might hinder local communities from caring for ecosystems?</h3>-->
-        <!--        </div>-->
-                <div class="col-xs-12">
-                    {{ tool.power_dynamics_content|raw }}
-                </div>
-            </div>
-        </section>
-        {% endif %}
-
-    <!-- SVG Map Section (keep your existing SVG code here) -->
-    <section class="container700">
-        {% partial 'svg_tool' %}
-    </section>
-
-
-    <!-- References Section -->
-    {% if tool.references_content %}
-    <section class="container700 references tool-detail-container">
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>References</h3>
-            </div>
-            <div class="col-xs-12">
-                {{ tool.references_content|raw }}
-            </div>
-        </div>
-    </section>
-    {% endif %}
-
-
-    <section class="container700">
-        <div class="developed_by_info_bubble">
-            <img src="{{'/assets/images/maria.png'|theme}}">
-            Tool developed by:<br>
-            <span class="name">Maria Thomposon</span>
-            <a href="mailto: maria@wur.nl" target="_blank">maria@wur.nl</a>
-        </div>
-    </section>
-
-
+    </div>
 </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        // Smooth scroll with 100px offset
+        $('.tool-sidebar a').on('click', function(e) {
+            e.preventDefault();
+
+            var target = $(this).attr('href');
+            var $target = $(target);
+
+            if ($target.length) {
+                var offsetTop = $target.offset().top - 100; // 100px above
+
+                $('html, body').animate({
+                    scrollTop: offsetTop
+                }, 600, 'swing');
+            }
+        });
+
+        // Update active state on scroll
+        $(window).on('scroll', function() {
+            var scrollPos = $(window).scrollTop() + 150; // Account for offset
+
+            $('.tool-sidebar a').each(function() {
+                var target = $(this).attr('href');
+                var $section = $(target);
+
+                if ($section.length) {
+                    var sectionTop = $section.offset().top;
+                    var sectionBottom = sectionTop + $section.outerHeight();
+
+                    if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                        $('.tool-sidebar a').removeClass('active');
+                        $(this).addClass('active');
+                    }
+                }
+            });
+        });
+
+        // Trigger scroll once on page load to set initial active state
+        $(window).trigger('scroll');
+
+    });
+</script>

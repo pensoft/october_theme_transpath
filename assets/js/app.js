@@ -394,8 +394,8 @@ function handleToolSVGMapMouseMove(event) {
     var x = event.clientX;
     var y = event.clientY;
 
-    tooltip.style.left = (x - 250) + "px";
-    tooltip.style.top = (y - 20) + "px";
+    tooltip.style.left = (x -150) + "px";
+    tooltip.style.top = (y - 130) + "px";
 
     tooltip.innerHTML = '<div class="tooltip_flag_container"><h4>' + title + '</h4><p>' + desc + '</p></div>';
     tooltip.classList.add("active");
