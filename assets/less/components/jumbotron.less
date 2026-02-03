@@ -1683,6 +1683,11 @@
     }
 
 
+    svg{
+        max-width: 100%;
+    }
+
+
 
 
 
@@ -1690,11 +1695,29 @@
 
     /* Action Steps Section */
     .action-steps-section {
-        //background: #fff;
-        //overflow: hidden;
-        background: url("../../assets/images/background-steps.png") center no-repeat;
-        background-size: contain;
+        position: relative;
         margin: 75px auto;
+
+        // Pseudo-element for extended background
+        &::before {
+            content: '';
+            position: absolute;
+            top: -45%;
+            left: -40%;
+            width: 180%;
+            height: 180%;
+            background: url("../../assets/images/background-steps.png") center no-repeat;
+            background-size: contain;
+            z-index: -1;
+            pointer-events: none;
+
+            .breakpoint-large-down({
+                top: -5%;
+                left: -5%;
+                width: 110%;
+                height: 110%;
+            });
+        }
     }
 
     .action-steps-title {
