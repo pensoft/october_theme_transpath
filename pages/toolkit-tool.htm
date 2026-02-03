@@ -268,14 +268,17 @@ function onStart(){
 
                         {% if tool.power_dynamics_content %}
                         <div class="row power_dynamics_content">
+                            {% if '<h3' not in tool.power_dynamics_content|lower %}
                             <div class="col-xs-12">
                                 <h3>Which power dynamics might hinder local communities from caring for ecosystems?</h3>
                             </div>
+                            {% endif %}
                             <div class="col-xs-12">
                                 {{ tool.power_dynamics_content|raw }}
                             </div>
                         </div>
                         {% endif %}
+                        
                     </section>
                     {% endif %}
 
