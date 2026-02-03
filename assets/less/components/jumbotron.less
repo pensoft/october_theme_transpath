@@ -1165,14 +1165,8 @@
         });
 
         .row + .row:nth-child(n+3) {
-            margin: 50px 0;
+            margin: 75px 0;
         }
-        //
-        //
-        //.row + .row{
-        //    margin: 50px 0;
-        //}
-
 
     }
 
@@ -1182,6 +1176,8 @@
         max-width: 100%;
         margin: 0;
         padding: 0;
+
+
 
     }
 
@@ -1196,7 +1192,17 @@
     }
 
     .row + .row:nth-child(n+3) {
-        margin: 50px 0;
+        margin: 75px 0;
+    }
+
+    .container700:not(#section-starting-point){
+        .row + .row{
+            margin-top: 75px;
+        }
+    }
+
+    #section-transform{
+        margin-bottom: 20px;
     }
 
     .scroll_down{
@@ -1688,6 +1694,7 @@
         //overflow: hidden;
         background: url("../../assets/images/background-steps.png") center no-repeat;
         background-size: contain;
+        margin: 75px auto;
     }
 
     .action-steps-title {
