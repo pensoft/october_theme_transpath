@@ -237,14 +237,24 @@ p:has(.edit-link){
         .header-image-bar {
             height: 100vh;
             position: relative;
-            background-image: url("../../assets/images/soil.png") !important;
-            //background-image: url("../../assets/images/background-hero.svg") !important;
-            background-position: bottom left !important;
+            //background-image: url("../../assets/images/soil.png") !important;
+            background-image: url("../../assets/images/background-hero.svg") !important;
+            background-position: top left !important;
             background-size: cover;
+            background-repeat: no-repeat;
             //.breakpoint-large-down({
             //    height: 100vh;
             //    margin-top: 0;
             //});
+
+            .soil{
+                height: 100vh;
+                position: relative;
+                background-image: url("../../assets/images/soil-bg.png") !important;
+                background-position: bottom left !important;
+                background-size: contain;
+                background-repeat: no-repeat;
+            }
         }
         h1 {
             &.underline {
