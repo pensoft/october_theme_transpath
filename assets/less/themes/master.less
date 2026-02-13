@@ -243,10 +243,11 @@ p:has(.edit-link){
             background-position: top right !important;
             background-size: cover;
             background-repeat: no-repeat;
-            //.breakpoint-large-down({
-            //    height: 100vh;
-            //    margin-top: 0;
-            //});
+            .breakpoint-large-down({
+                height: 160vh;
+                margin-top: 0;
+                position: absolute;
+            });
 
             .soil{
                 height: 100vh;
@@ -255,6 +256,10 @@ p:has(.edit-link){
                 background-position: bottom left !important;
                 background-size: contain;
                 background-repeat: no-repeat;
+                .breakpoint-large-down({
+                    height: 160vh;
+                    background-size: 130vh;
+                });
             }
         }
         h1 {
@@ -275,6 +280,13 @@ p:has(.edit-link){
             flex-direction: column;
             height: 100vh;
 
+            .breakpoint-large-down({
+                max-width: 73%;
+                padding-left: 0px;
+                margin: 100px auto;
+                height: fit-content;
+            });
+
             h1{
                 color: #003B54;
                 font-family: Metropolis;
@@ -284,6 +296,10 @@ p:has(.edit-link){
                 line-height: normal;
                 text-align: left;
                 text-transform: unset;
+
+                .breakpoint-large-down({
+                    font-size: 40px!important;
+                });
             }
 
             p{
@@ -310,19 +326,27 @@ p:has(.edit-link){
                 text-align: left;
             }
 
-            .breakpoint-laptop-down({
-                padding-left: 50px;
-            });
-
-            .breakpoint-small-down({
-                max-width: 100%;
-                padding-left: 20px;
-            });
+            //.breakpoint-laptop-down({
+            //    padding-left: 50px;
+            //});
+            //
+            //.breakpoint-small-down({
+            //    max-width: 100%;
+            //    padding-left: 20px;
+            //});
         }
 
         svg {
             height: 80vh;
             margin-top: 26vh;
+
+            .breakpoint-large-down({
+                margin-top: 0;
+            });
+
+            //height: 76vh;
+            //position: relative;
+            //bottom: -14vh;
         }
 
         .tree_container{
@@ -368,6 +392,9 @@ p:has(.edit-link){
             line-height: normal;
             text-transform: unset;
             text-align: left;
+            .breakpoint-large-down({
+                font-size: 40px!important;
+            });
         }
 
         .label{
