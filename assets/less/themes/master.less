@@ -235,11 +235,12 @@ p:has(.edit-link){
 
     &.toolkit {
         .header-image-bar {
-            height: 100vh;
+            height: calc(~'100vh - 57px');
+            margin-top: 57px;
             position: relative;
             //background-image: url("../../assets/images/soil.png") !important;
             background-image: url("../../assets/images/background-hero.svg") !important;
-            background-position: top left !important;
+            background-position: top right !important;
             background-size: cover;
             background-repeat: no-repeat;
             //.breakpoint-large-down({
@@ -319,8 +320,9 @@ p:has(.edit-link){
             });
         }
 
-        svg{
-            height: 76vh;
+        svg {
+            height: 80vh;
+            margin-top: 27vh;
         }
 
         .tree_container{
