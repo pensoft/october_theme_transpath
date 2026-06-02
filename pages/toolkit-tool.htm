@@ -1,4 +1,4 @@
-url = "/toolkit/tool/:role/:stage/:category/:tool?"
+url = "/actionguide/tool/:role/:stage/:category/:tool?"
 layout = "default"
 title = "Tool Details"
 
@@ -21,7 +21,7 @@ function onStart(){
 
     // Validate role
     if (!in_array($role, ['researcher', 'practitioner'])) {
-        return \Redirect::to('/toolkit');
+        return \Redirect::to('/actionguide');
     }
 
     // Find the stage
@@ -30,7 +30,7 @@ function onStart(){
         ->first();
 
     if (!$stage) {
-        return \Redirect::to('/toolkit');
+        return \Redirect::to('/actionguide');
     }
 
     // Find the category
@@ -40,7 +40,7 @@ function onStart(){
         ->first();
 
     if (!$category) {
-        return \Redirect::to('/toolkit');
+        return \Redirect::to('/actionguide');
     }
 
     $this['stage'] = $stage;
@@ -63,7 +63,7 @@ function onStart(){
     }
 
     if (!$tool) {
-        return \Redirect::to('/toolkit');
+        return \Redirect::to('/actionguide');
     }
 
     // Get all tools in this category for navigation

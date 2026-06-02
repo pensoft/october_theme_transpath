@@ -43,6 +43,11 @@ function initToolkitModal() {
         });
     });
 
+    // Explore all - go to the full listing page
+    $('#exploreAllBtn').on('click', function() {
+        window.location.href = '/actionguide/all';
+    });
+
     // Next step
     $(document).on('click', '#btnNext', function() {
         var currentStep = stepData.currentStep;
@@ -89,7 +94,7 @@ function initToolkitModal() {
             return;
         }
         stepData.step3Value = selected.value;
-        var url = '/toolkit/tool/' + stepData.roleType + '/' + stepData.step1Value + '/' + stepData.step2Value + '/' + stepData.step3Value;
+        var url = '/actionguide/tool/' + stepData.roleType + '/' + stepData.step1Value + '/' + stepData.step2Value + '/' + stepData.step3Value;
         window.location.href = url;
     });
 

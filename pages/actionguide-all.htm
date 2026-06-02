@@ -1,0 +1,127 @@
+url = "/actionguide/all"
+layout = "default"
+title = "All Tools"
+
+==
+<?php
+use Pensoft\Toolset\Models\Stage;
+
+function onStart()
+{
+    // Load every stage with its categories and active tools, all in sort order
+    $this['stages'] = Stage::with([
+        'categories' => function ($q) {
+            $q->orderBy('sort_order', 'asc')
+              ->with(['tools' => function ($t) {
+                  $t->where('is_active', true)->orderBy('sort_order', 'asc');
+              }]);
+        }
+    ])
+    ->orderBy('sort_order', 'asc')
+    ->get();
+}
+?>
+==
+<section class="actionguide-all">
+    <div class="container">
+        {% if stages is not empty %}
+
+        <!-- Stage tabs -->
+        <div class="stage-tabs" role="tablist">
+            {% for stage in stages %}
+            <button type="button"
+                    class="stage-tab {{ loop.first ? 'active' : '' }}"
+                    data-target="stage-{{ stage.id }}"
+                    role="tab">
+                <span class="stage-name">{{ stage.name }}</span>
+                <span class="role-badge role-{{ stage.role }}">{{ stage.role }}</span>
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- Stage panels -->
+        {% for stage in stages %}
+        <div class="stage-panel {{ loop.first ? 'active' : '' }}" id="stage-{{ stage.id }}" role="tabpanel">
+            {% if stage.categories is not empty %}
+
+            <!-- Category subtabs -->
+            <div class="category-subtabs" role="tablist">
+                {% for category in stage.categories %}
+                <button type="button"
+                        class="category-subtab {{ loop.first ? 'active' : '' }}"
+                        data-target="category-{{ category.id }}"
+                        role="tab">
+                    {{ category.title }}
+                </button>
+                {% endfor %}
+            </div>
+
+            <!-- Category panels -->
+            {% for category in stage.categories %}
+            <div class="category-panel {{ loop.first ? 'active' : '' }}" id="category-{{ category.id }}" role="tabpanel">
+                {% if category.description %}
+                <p class="category-desc">{{ category.description|raw }}</p>
+                {% endif %}
+
+                {% if category.tools is not empty %}
+                <div class="tools-grid">
+                    {% for tool in category.tools %}
+                    <a href="/actionguide/tool/{{ tool.role }}/{{ stage.name }}/{{ category.slug }}/{{ tool.slug }}"
+                       class="tool-card">
+                        <h4 class="tool-card-title">{{ tool.title }}</h4>
+                        {% if tool.description %}
+                        <p class="tool-card-desc">{{ tool.description|raw }}</p>
+                        {% endif %}
+                        <span class="tool-card-link">
+                            View tool
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="no-items-message">No tools available in this category.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <p class="no-items-message">No categories available for this stage.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p class="no-items-message">No tools available yet.</p>
+        {% endif %}
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Stage (top-level) tabs
+        $('.actionguide-all').on('click', '.stage-tab', function () {
+            var target = $(this).data('target');
+
+            $('.stage-tab').removeClass('active');
+            $(this).addClass('active');
+
+            $('.stage-panel').removeClass('active');
+            $('#' + target).addClass('active');
+        });
+
+        // Category (sub-level) tabs — scoped to their own stage panel
+        $('.actionguide-all').on('click', '.category-subtab', function () {
+            var target = $(this).data('target');
+            var $panel = $(this).closest('.stage-panel');
+
+            $panel.find('.category-subtab').removeClass('active');
+            $(this).addClass('active');
+
+            $panel.find('.category-panel').removeClass('active');
+            $panel.find('#' + target).addClass('active');
+        });
+    });
+</script>

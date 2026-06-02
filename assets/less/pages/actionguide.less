@@ -1,0 +1,167 @@
+@ag-primary: #2288AF;
+@ag-border: #e2e8ee;
+@ag-muted: #5a6b76;
+
+.actionguide-all {
+    //padding: 40px 0 80px;
+
+    /* ---- Stage tabs (top level) ---- */
+    .stage-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        border-bottom: 2px solid @ag-border;
+        margin-bottom: 30px;
+    }
+
+    .stage-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        background: transparent;
+        padding: 12px 18px;
+        font-size: 16px;
+        font-weight: 600;
+        color: @ag-muted;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+        transition: color .2s, border-color .2s;
+
+        &:hover {
+            color: @ag-primary;
+        }
+
+        &.active {
+            color: @ag-primary;
+            border-bottom-color: @ag-primary;
+        }
+
+        .role-badge {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: fade(@ag-primary, 12%);
+            color: @ag-primary;
+
+            &.role-practitioner {
+                background: fade(#3a8a3a, 12%);
+                color: #2f7a2f;
+            }
+        }
+    }
+
+    /* ---- Stage panels ---- */
+    .stage-panel {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+
+    /* ---- Category subtabs ---- */
+    .category-subtabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 28px;
+    }
+
+    .category-subtab {
+        border: 1px solid @ag-border;
+        background: #fff;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: @ag-muted;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all .2s;
+
+        &:hover {
+            border-color: @ag-primary;
+            color: @ag-primary;
+        }
+
+        &.active {
+            background: @ag-primary;
+            border-color: @ag-primary;
+            color: #fff;
+        }
+    }
+
+    /* ---- Category panels ---- */
+    .category-panel {
+        display: none;
+
+        &.active {
+            display: block;
+        }
+    }
+
+    .category-desc {
+        color: @ag-muted;
+        margin-bottom: 22px;
+        max-width: 720px;
+    }
+
+    /* ---- Tool cards ---- */
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .tool-card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid @ag-border;
+        border-radius: 10px;
+        padding: 22px;
+        text-decoration: none;
+        color: inherit;
+        background: #fff;
+        transition: box-shadow .2s, transform .2s, border-color .2s;
+
+        &:hover {
+            border-color: @ag-primary;
+            box-shadow: 0 8px 24px rgba(34, 136, 175, .12);
+            transform: translateY(-2px);
+        }
+
+        .tool-card-title {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #1c2b33;
+        }
+
+        .tool-card-desc {
+            margin: 0 0 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: @ag-muted;
+            flex-grow: 1;
+        }
+
+        .tool-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+            font-size: 14px;
+            font-weight: 600;
+            color: @ag-primary;
+        }
+    }
+
+    .no-items-message {
+        color: @ag-muted;
+        font-style: italic;
+        padding: 20px 0;
+    }
+}
