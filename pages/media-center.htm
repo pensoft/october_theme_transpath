@@ -16,7 +16,6 @@ use Pensoft\Media\Models\Presentations;
 use Pensoft\Media\Models\Pressreleases;
 use Pensoft\Media\Models\Videos;
 use Pensoft\Media\Models\Graphic;
-use System\Models\File;
 
 function onStart(){
 	$this['logos'] =  MediaLogos::get();
@@ -25,22 +24,6 @@ function onStart(){
 	$this['presentations'] =  Presentations::get();
 	$this['pressreleases'] =  Pressreleases::get();
 	$this['videos'] =  Videos::get();
-}
-
-
-function onDownloadFile(){
-	$file = File::find(post('id'));
-	$pathToFile = $file->getLocalPath();
-$fileName = $file->file_name;
-$fileType = $file->content_type;
-$headers = [
-'HTTP/1.1 200 OK',
-'Pragma: public',
-'Content-Type: '.$fileType,
-'Content-Type: application/force-download'
-];
-
-return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
@@ -88,23 +71,13 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="text-center">
                     <div class="card_title">Download {{record.name}}</div>
                     {% if record.file_jpg %}
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file_jpg.id}}" name="id">
-                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}} as JPG">JPG <i class="pr p-download" aria-hidden="true"></i></button>
-                    {{ form_close() }}
-
+                    <a class="btn btn-primary download-btn matomo_download" href="{{record.file_jpg.path}}" download="{{record.file_jpg.file_name}}" aria-label="Download {{record.name}} as JPG">JPG <i class="pr p-download" aria-hidden="true"></i></a>
                     {% endif %}
                     {% if record.file_png %}
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file_png.id}}" name="id">
-                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}} as PNG">PNG <i class="pr p-download" aria-hidden="true"></i> </button>
-                    {{ form_close() }}
+                    <a class="btn btn-primary download-btn matomo_download" href="{{record.file_png.path}}" download="{{record.file_png.file_name}}" aria-label="Download {{record.name}} as PNG">PNG <i class="pr p-download" aria-hidden="true"></i> </a>
                     {% endif %}
                     {% if record.file_eps %}
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file_eps.id}}" name="id">
-                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}} as SVG">SVG <i class="pr p-download" aria-hidden="true"></i> </button>
-                    {{ form_close() }}
+                    <a class="btn btn-primary download-btn matomo_download" href="{{record.file_eps.path}}" download="{{record.file_eps.file_name}}" aria-label="Download {{record.name}} as SVG">SVG <i class="pr p-download" aria-hidden="true"></i> </a>
                     {% endif %}
 
                     {% if record.file_pdf %}
@@ -141,10 +114,7 @@ return Response::download($pathToFile, $fileName, $headers);
             <div class="col-xs-12">
                 <div class="text-center">
 
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file.id}}" name="id">
-                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></button>
-                    {{ form_close() }}
+                    <a class="btn btn-primary download-btn matomo_download" href="{{record.file.path}}" download="{{record.file.file_name}}" aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></a>
 
                 </div>
             </div>
@@ -206,10 +176,7 @@ return Response::download($pathToFile, $fileName, $headers);
             {% if record.file %}
             <div class="col-xs-12">
                 <div class="text-center">
-                    {{form_open({ request: 'onDownloadFile' }) }}
-                    <input type="hidden" value="{{record.file.id}}" name="id">
-                    <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></button>
-                    {{ form_close() }}
+                    <a class="btn btn-primary download-btn matomo_download" href="{{record.file.path}}" download="{{record.file.file_name}}" aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></a>
 
                 </div>
             </div>
@@ -248,10 +215,7 @@ return Response::download($pathToFile, $fileName, $headers);
 
                 {% if record.file %}
 
-                {{form_open({ request: 'onDownloadFile' }) }}
-                <input type="hidden" value="{{record.file.id}}" name="id">
-                <button type="submit" class="btn btn-primary" data-attach-loading aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></button>
-                {{ form_close() }}
+                <a class="btn btn-primary download-btn matomo_download" href="{{record.file.path}}" download="{{record.file.file_name}}" aria-label="Download {{record.name}}">Download <i class="pr p-download" aria-hidden="true"></i></a>
 
 
                 {% endif %}
