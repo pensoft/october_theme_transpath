@@ -1,0 +1,75 @@
+url = "/download/:id|^[0-9]+$/:filename"
+title = "Download"
+is_hidden = 0
+robot_index = "noindex"
+robot_follow = "nofollow"
+==
+<?php
+use System\Models\File;
+
+/**
+ * Serves an uploaded media file under a URL that ends with its original file
+ * name, e.g. /download/1234/TRANSPATH-flyer.pdf instead of the hashed disk
+ * name /storage/app/uploads/public/8f2/.../5e1a9c....pdf
+ *
+ * Matomo names a download after the URL it was requested from, so the file
+ * name has to be part of the URL for the Downloads report to be readable.
+ *
+ * Only public attachments of the media plugin are served. The requested file
+ * name must match the stored one, so the route cannot be walked by ID to
+ * fish out uploads that are not linked publicly.
+ */
+function onStart()
+{
+    $file = File::find((int) $this->param('id'));
+
+    if (!$file || !$file->isPublic() || !$this->isMediaAttachment($file)) {
+        return $this->notFound();
+    }
+
+    if (!$this->matchesFileName($file, (string) $this->param('filename'))) {
+        return $this->notFound();
+    }
+
+    $path = $file->getLocalPath();
+
+    if (!file_exists($path)) {
+        return $this->notFound();
+    }
+
+    $headers = [];
+
+    if ($contentType = $file->getContentType()) {
+        $headers['Content-Type'] = $contentType;
+    }
+
+    return Response::download($path, $file->file_name, $headers);
+}
+
+/**
+ * Files of the media plugin are the ones published through the media center,
+ * add a model here when another public section starts using this route.
+ */
+function isMediaAttachment($file)
+{
+    return strpos((string) $file->attachment_type, 'Pensoft\\Media\\Models\\') === 0;
+}
+
+/**
+ * The routed segment arrives decoded, but compare the raw value as well in
+ * case a name contains something that looks like a percent escape.
+ */
+function matchesFileName($file, $requested)
+{
+    $stored = mb_strtolower((string) $file->file_name);
+
+    return mb_strtolower($requested) === $stored
+        || mb_strtolower(rawurldecode($requested)) === $stored;
+}
+
+function notFound()
+{
+    return Response::make($this->controller->run('404')->getContent(), 404);
+}
+?>
+==

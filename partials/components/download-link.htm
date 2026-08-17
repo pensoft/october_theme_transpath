@@ -1,0 +1,21 @@
+{#
+	Download button for an attached file.
+
+	The href points at the "download" page, whose URL ends with the original
+	file name, so Matomo reports the real name instead of the hashed disk name.
+
+	Parameters:
+		file       - the File model to download (required)
+		label      - button text, defaults to "Download"
+		class      - css classes, defaults to the primary button
+		icon       - set to true to append the download icon
+		title      - optional title attribute
+		aria_label - optional aria-label, defaults to "Download <file name>"
+#}
+{% if file %}
+<a class="{{ class|default('btn btn-primary') }} matomo_download"
+   href="{{ 'download'|page({ id: file.id, filename: file.file_name|url_encode }) }}"
+   download="{{ file.file_name }}"
+   {% if title %}title="{{ title }}"{% endif %}
+   aria-label="{{ aria_label|default('Download ' ~ file.file_name) }}">{{ label|default('Download') }}{% if icon %} <i class="pr p-download" aria-hidden="true"></i>{% endif %}</a>
+{% endif %}

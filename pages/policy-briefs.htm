@@ -6,33 +6,9 @@ header_image = "about.jpg"
 ==
 <?php
 use Pensoft\Media\Models\Presentations;
-use System\Models\File;
 
 function onStart(){
 	$this['recordsList'] =  Presentations::get();
-	if(post('download')){
-		$file = File::find((int)post('download'));
-		$file_name = $file->getLocalPath();
-$recordName = post('file_name') ? post('file_name') : 'TRANSPATH_policy_brief';
-$ext= $file->getExtension();
-
-if (file_exists($file_name)) {
-header('Content-Description: File Transfer');
-header('Content-Type: application/octet-stream');
-header("Content-Type: application/force-download");
-header('Content-Disposition: attachment; filename='.$recordName .'.'. $ext);
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-header('Content-Length: ' . filesize($file_name));
-ob_clean();
-flush();
-readfile($file_name);
-exit();
-}
-return Redirect::to('/media-center/policy-briefs');
-}
 }
 ?>
 ==
@@ -53,7 +29,7 @@ return Redirect::to('/media-center/policy-briefs');
             <div class="text-center">
                 <span class="card_title">{{record.name}}</span><br>
                 <span class="card_image_container" style="background: url({{record.presentation_image.thumb(220, 220,{'mode':'crop'})}}) center center no-repeat;" title="{{record.name}}"></span>
-                <br><a href="{{ record.file.path }}#{{record.file.file_name}}" target="_blank" title="{{record.name}}" class="btn btn-primary">Download</a>
+                <br>{% partial 'components/download-link' file=record.file title=record.name aria_label='Download ' ~ record.name %}
             </div>
         </div>
 

@@ -18,33 +18,9 @@ pageNumber = "{{ :page }}"
 ==
 <?php
 use Pensoft\Media\Models\Videos;
-use System\Models\File;
 
 function onStart(){
 	$this['mediaVideosList'] =  Videos::where('pensoft_media_videos.parent_id', null)->get();
-if(get('download')){
-$file = File::find((int)get('download'));
-$file_name = $file->getLocalPath();
-$recordName = get('file_name') ? get('file_name') : 'TRANSPATH_video';
-$ext= $file->getExtension();
-
-if (file_exists($file_name)) {
-header('Content-Description: File Transfer');
-header('Content-Type: application/octet-stream');
-header("Content-Type: application/force-download");
-header('Content-Disposition: attachment; filename='.$recordName .'.'. $ext);
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-header('Content-Length: ' . filesize($file_name));
-ob_clean();
-flush();
-readfile($file_name);
-exit();
-}
-return Redirect::to('/media-center/videos');
-}
 }
 ?>
 ==
@@ -68,7 +44,7 @@ return Redirect::to('/media-center/videos');
 
 				<p>Attachment: {{record.file.file_name}}, {{record.file.size}}</p>
 
-				<p><a class=" btn btn-primary" href="{{ ''| page }}?{{queries}}&download={{record.file.id}}&file_name={{record.name|replace({' ': '_'})}}">Download</a></p>
+				<p>{% partial 'components/download-link' file=record.file aria_label='Download ' ~ record.name %}</p>
 
 				{% endif %}
 
