@@ -268,7 +268,17 @@ function onStart(){
 
                         {% if tool.power_dynamics_content %}
                         <div class="row power_dynamics_content">
-                            {% if '<h3' not in tool.power_dynamics_content|lower %}
+                            {% set noPowerDynamicsHeading = [
+                                'reconnect finance with nature',
+                                'weak human-nature connection',
+                                'building trust and collaboration',
+                                'defining my level of engagement with change',
+                                'navigating transdisciplinary research',
+                                'participatory and transformative methods',
+                                'from academic jargon to common ground',
+                                'data synthesis'
+                            ] %}
+                            {% if '<h3' not in tool.power_dynamics_content|lower and tool.title|trim|lower not in noPowerDynamicsHeading %}
                             <div class="col-xs-12">
                                 <h3>Which power dynamics might hinder local communities from caring for ecosystems?</h3>
                             </div>
